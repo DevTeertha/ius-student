@@ -23,14 +23,14 @@ export class EducationDto {
   @ApiProperty({ example: 'Computer Science & Engineering' })
   department: string;
 
-  @ApiProperty({ example: '10th Batch' })
-  batch: string;
+  @ApiProperty({ example: 10 })
+  batch: number;
 
-  @ApiProperty({ example: new Date().toUTCString() })
-  seassonYear: Date;
+  @ApiProperty({ example: 2017 })
+  seassonYear: number;
 
-  @ApiProperty({ example: new Date().toUTCString() })
-  graduationYear: Date;
+  @ApiProperty({ example: 2024 })
+  graduationYear: number;
 
   @ApiProperty({ example: true })
   isCurrent: boolean;

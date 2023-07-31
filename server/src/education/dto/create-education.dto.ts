@@ -42,16 +42,16 @@ export class CreateEducationDto {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: '10th Batch' })
-  batch: string;
+  @ApiProperty({ example: 10 })
+  batch: number;
 
   @IsNotEmpty()
-  @ApiProperty({ example: new Date().toUTCString() })
-  seassonYear: Date;
+  @ApiProperty({ example: 2018 })
+  seassonYear: number;
 
   @IsOptional()
-  @ApiProperty({ example: new Date().toUTCString() })
-  graduationYear: Date;
+  @ApiProperty({ example: 2024 })
+  graduationYear: number;
 
   @IsBoolean()
   @IsOptional()

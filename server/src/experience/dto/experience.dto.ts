@@ -1,12 +1,11 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty } from 'class-validator';
+import { StudentDto } from 'src/student/dto/student.dto';
 
-import { CreateExperienceDto } from './create-experience.dto';
 import { Student } from 'src/student/entities/student.entity';
 
-export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
-  @IsOptional()
+export class ExperienceDto {
+  @IsNotEmpty()
   @ApiProperty({
     example: 'Mind Orbital Technologies',
     name: 'companyName',
@@ -14,7 +13,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   companyName: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'Full Time',
     name: 'jobType',
@@ -22,7 +21,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   jobType: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: '27 no college road',
     name: 'adress',
@@ -30,7 +29,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   address: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'Narayanganj',
     name: 'city',
@@ -38,7 +37,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   city: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: '1400',
     name: 'postCode',
@@ -46,7 +45,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   postCode: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'Bangladesh',
     name: 'country',
@@ -54,7 +53,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   country: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: 'Software Engineer',
     name: 'designation',
@@ -62,7 +61,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   designation: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: new Date().toUTCString(),
     name: 'startFrom',
@@ -70,7 +69,7 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   startFrom: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: new Date().toUTCString(),
     name: 'endFrom',
@@ -78,11 +77,19 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
   })
   endFrom: string;
 
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({
     example: true,
     name: 'isCurrentEmployee',
     required: true,
   })
   isCurrentEmployee: boolean;
+
+  @IsNotEmpty()
+  @ApiProperty({
+    example: { ...StudentDto },
+    name: 'student',
+    required: true,
+  })
+  student: Student | number;
 }

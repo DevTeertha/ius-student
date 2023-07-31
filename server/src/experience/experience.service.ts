@@ -1,26 +1,49 @@
 import { Injectable } from '@nestjs/common';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Repository } from 'typeorm';
+import { plainToClass } from 'class-transformer';
+
+import { ExperienceDto } from './dto/experience.dto';
 import { CreateExperienceDto } from './dto/create-experience.dto';
 import { UpdateExperienceDto } from './dto/update-experience.dto';
 
+import { Experience } from './entities/experience.entity';
+import { Student } from 'src/student/entities/student.entity';
+
 @Injectable()
 export class ExperienceService {
-  create(createExperienceDto: CreateExperienceDto) {
-    return 'This action adds a new experience';
+  constructor(
+    @InjectRepository(Experience)
+    private experienceRepository: Repository<Experience>,
+  ) {}
+
+  async create(
+    createExperienceDto: CreateExperienceDto,
+  ): Promise<ExperienceDto> {
+    const experience = plainToClass(Student, createExperienceDto);
+    return await this.experienceRepository.save(experience);
   }
 
-  findAll() {
-    return `This action returns all experience`;
+  async findAll(): Promise<ExperienceDto[]> {
+    return await this.experienceRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} experience`;
+  async findOne(id: number): Promise<ExperienceDto> {
+    return await this.experienceRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateExperienceDto: UpdateExperienceDto) {
-    return `This action updates a #${id} experience`;
+  async update(
+    id: number,
+    updateExperienceDto: UpdateExperienceDto,
+  ): Promise<ExperienceDto> {
+    const experience = plainToClass(Student, updateExperienceDto);
+    await this.experienceRepository.update({ id }, { ...experience });
+    return await this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} experience`;
+  async remove(id: number): Promise<ExperienceDto> {
+    const findExperience = await this.findOne(id);
+    await this.experienceRepository.delete(id);
+    return findExperience;
   }
 }

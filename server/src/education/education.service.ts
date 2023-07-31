@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { plainToClass } from 'class-transformer';
 import { Repository } from 'typeorm';
 
 import { EducationDto } from './dto/education.dto';
@@ -15,23 +16,30 @@ export class EducationService {
     private educationRepository: Repository<Education>,
   ) {}
 
-  create(createEducationDto: CreateEducationDto) {
-    return 'This action adds a new education';
+  async create(createEducationDto: CreateEducationDto) {
+    return await this.educationRepository.save(createEducationDto);
   }
 
   async findAll(): Promise<EducationDto[]> {
     return await this.educationRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} education`;
+  async findOne(id: number): Promise<EducationDto> {
+    return await this.educationRepository.findOne({ where: { id } });
   }
 
-  update(id: number, updateEducationDto: UpdateEducationDto) {
-    return `This action updates a #${id} education`;
+  async update(
+    id: number,
+    updateEducationDto: UpdateEducationDto,
+  ): Promise<EducationDto> {
+    const education = plainToClass(Education, updateEducationDto);
+    await this.educationRepository.update({ id }, { ...education });
+    return await this.findOne(id);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} education`;
+  async remove(id: number): Promise<EducationDto> {
+    const findEducation = await this.findOne(id);
+    await this.educationRepository.delete(id);
+    return findEducation;
   }
 }

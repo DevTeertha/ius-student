@@ -1,19 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
 import {
-  IsNumber,
-  IsNotEmpty,
-  IsString,
-  IsEmail,
-  IsOptional,
-} from 'class-validator';
-import {
-  EStudentType,
   EGender,
   EMaritalStatus,
   EReligion,
+  EStudentType,
 } from '../enum/student.enum';
 
-export class CreateStudentDto {
+export class StudentDto {
   @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ example: 212010110, name: 'studentId', required: true })
@@ -58,7 +52,7 @@ export class CreateStudentDto {
   dateOfBirth: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({ example: 'Bangladesh', name: 'country', required: true })
   country: string;
 
@@ -101,7 +95,7 @@ export class CreateStudentDto {
   religion: EReligion;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({ example: 'Bangladesh', name: 'imgUrl', required: true })
   imgUrl: string;
 
@@ -128,7 +122,7 @@ export class CreateStudentDto {
   fatherName: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({ example: '123456789789', name: 'fatherPhone', required: true })
   fatherPhone: string;
 
@@ -138,7 +132,11 @@ export class CreateStudentDto {
   motherName: string;
 
   @IsString()
-  @IsOptional()
+  @IsNotEmpty()
   @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
   motherPhone: string;
+
+  educations: any[];
+
+  experiences: any[];
 }

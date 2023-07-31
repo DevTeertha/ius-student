@@ -1,4 +1,4 @@
-import { Column, Entity, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
+import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 
 import { Education } from 'src/education/entities/education.entity';
 import { Experience } from 'src/experience/entities/experience.entity';
@@ -10,11 +10,10 @@ import {
   EStudentType,
 } from '../enum/student.enum';
 
-@Entity('students')
-export class Student {
-  @PrimaryGeneratedColumn()
-  id: number;
+import { BaseEntity } from 'src/shared/entity/base.entity';
 
+@Entity('students')
+export class Student extends BaseEntity {
   @Column({ unique: true })
   studentId: number;
 
@@ -30,8 +29,8 @@ export class Student {
   @Column({ type: 'enum', enum: EGender, default: EGender.MALE })
   gender: EGender;
 
-  @Column()
-  dateOfBirth: Date;
+  @Column({ nullable: true })
+  dateOfBirth: string;
 
   @Column()
   country: string;
@@ -84,4 +83,14 @@ export class Student {
 
   @OneToMany(() => Experience, (experience: Experience) => experience.student)
   experiences: Experience[];
+
+  @BeforeInsert()
+  insertDate() {
+    this.created_at = new Date().toUTCString();
+  }
+
+  @BeforeUpdate()
+  updateDate() {
+    this.updated_at = new Date().toUTCString();
+  }
 }

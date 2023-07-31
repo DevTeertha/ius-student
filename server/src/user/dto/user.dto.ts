@@ -2,8 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty } from 'class-validator';
 
 import { EUserType } from '../enum/user.enum';
+import { Exclude } from 'class-transformer';
 
-export class CreateUserDto {
+export class UserDto {
   @IsNotEmpty()
   @ApiProperty({ example: 'Tertha Dev', name: 'firstName' })
   firstName: string;
@@ -13,7 +14,7 @@ export class CreateUserDto {
   lastName: string;
 
   @IsNotEmpty()
-  @ApiProperty({ example: 'admin', name: 'username' })
+  @ApiProperty({ example: 'admin', name: 'lastName' })
   username: string;
 
   @IsEmail()
@@ -23,6 +24,7 @@ export class CreateUserDto {
 
   @IsNotEmpty()
   @ApiProperty({ example: 'admin', name: 'password' })
+  @Exclude()
   password: string;
 
   @IsNotEmpty()

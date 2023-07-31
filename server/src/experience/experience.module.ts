@@ -6,10 +6,12 @@ import { Experience } from './entities/experience.entity';
 import { ExperienceController } from './experience.controller';
 
 import { ExperienceService } from './experience.service';
+import { UtilService } from 'src/shared/services/util.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Experience])],
   controllers: [ExperienceController],
-  providers: [ExperienceService],
+  providers: [ExperienceService, UtilService],
+  exports: [ExperienceService],
 })
 export class ExperienceModule {}

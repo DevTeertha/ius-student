@@ -1,11 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BeforeInsert, Column, Entity } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+
 import { EUserType } from '../enum/user.enum';
 
-@Entity('users')
-export class User {
-  @PrimaryGeneratedColumn()
-  id: number;
+import { BaseEntity } from 'src/shared/entity/base.entity';
+import { Exclude } from 'class-transformer';
 
+@Entity('users')
+export class User extends BaseEntity {
   @Column()
   firstName: string;
 
@@ -19,8 +21,14 @@ export class User {
   username: string;
 
   @Column()
+  @Exclude()
   password: string;
 
-  @Column({ type: 'enum', default: EUserType.ADMIN })
+  @Column({ type: 'enum', enum: EUserType, default: EUserType.ADMIN })
   type: EUserType;
+
+  @BeforeInsert()
+  async hashingPassword() {
+    this.password = await bcrypt.hash(this.password, 10);
+  }
 }

@@ -4,14 +4,17 @@ import {
   ManyToOne,
   JoinColumn,
   Entity,
+  BeforeInsert,
+  BeforeUpdate,
 } from 'typeorm';
 
 import { Student } from 'src/student/entities/student.entity';
+import { BaseEntity } from 'src/shared/entity/base.entity';
 
 import { EDegreeType } from '../enum/education.enum';
 
 @Entity('educations')
-export class Education {
+export class Education extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -31,20 +34,30 @@ export class Education {
   department: string;
 
   @Column({ nullable: true })
-  batch: string;
+  batch: number;
 
   @Column()
-  seassonYear: Date;
+  seassonYear: number;
 
   @Column({ nullable: true })
-  graduationYear: Date;
+  graduationYear: number;
 
   @Column({ default: false })
   isCurrent: boolean;
 
   @ManyToOne(() => Student, (student: Student) => student.id, {
-    onDelete: 'CASCADE',
+    cascade: ['insert', 'update', 'remove'],
   })
   @JoinColumn({ name: 'student_id', referencedColumnName: 'id' })
   student: Student | number;
+
+  @BeforeInsert()
+  insertDate() {
+    this.created_at = new Date().toUTCString();
+  }
+
+  @BeforeUpdate()
+  updateDate() {
+    this.updated_at = new Date().toUTCString();
+  }
 }
