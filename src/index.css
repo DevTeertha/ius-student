@@ -1,5 +1,28 @@
-@import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities';
-
 @import 'daisyui/dist/full.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.root-container {
+  background-color: white;
+  height: 100vh;
+  position: relative;
+  overflow: auto;
+}
+
+.login-container {
+  background-color: #f1f5f9;
+  height: 100vh;
+}
+
+.login-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  -moz-transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+}
