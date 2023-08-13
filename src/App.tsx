@@ -1,19 +1,24 @@
 import './App.css';
 
-import { Button, Navbar } from 'react-daisyui';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+
+import Home from './pages/Home';
+import Login from './pages/Login';
+import AuthGuard from './shared/guard/auth/AuthGuard';
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    element: <AuthGuard element={<Home />} />,
+  },
+  {
+    path: '/login',
+    element: <Login />,
+  },
+]);
 
 function App() {
-  return (
-    <>
-      <div className='flex w-full component-preview p-4 items-center justify-center gap-2 font-sans'>
-        <Navbar>
-          <Button className='text-xl normal-case' color='ghost'>
-            daisyUI
-          </Button>
-        </Navbar>
-      </div>
-    </>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
