@@ -1,7 +1,7 @@
-import MainComponent from '../components/main/main';
+import HomeComponent from '../components/home/homeComponent';
 
 function Home() {
-  return <MainComponent />;
+  return <HomeComponent />;
 }
 
 export default Home;

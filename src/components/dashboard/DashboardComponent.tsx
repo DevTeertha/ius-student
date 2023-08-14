@@ -1,6 +1,6 @@
 import NavbarComponent from '../navbar/navbar';
 
-function MainComponent() {
+function HomeComponent() {
   return (
     <>
       <NavbarComponent />
@@ -22,4 +22,4 @@ function MainComponent() {
   );
 }
 
-export default MainComponent;
+export default HomeComponent;

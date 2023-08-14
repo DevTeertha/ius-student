@@ -26,7 +26,9 @@ export class AuthController {
         'Login successful',
       );
     } catch (error) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException(
+        this.utilService.errorReponse(error?.message),
+      );
     }
   }
 }
