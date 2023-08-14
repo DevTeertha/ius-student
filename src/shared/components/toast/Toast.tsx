@@ -1,9 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, createContext } from 'react';
 import { Alert } from 'react-daisyui';
 
 import { toastConfig } from './config';
 
-import { EToastStatusType, IToastProps } from '../../interface/toastProps.interface';
+import { EToastStatusType, IToastContext, IToastProps } from '../../interface/toast.interface';
+
+export const ToastContext = createContext<IToastContext | null>(null);
 
 function Toast({ message, state, status = 'success' }: IToastProps) {
   const [isTrigger, setIsTrigger] = state;

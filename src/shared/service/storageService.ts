@@ -15,3 +15,11 @@ export const getToken = (): string | null => {
     return null;
   }
 };
+
+export const clearStorage = () => {
+  if (typeof window !== 'undefined') {
+    return localStorage.clear();
+  } else {
+    return null;
+  }
+};

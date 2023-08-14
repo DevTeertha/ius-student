@@ -1,15 +1,15 @@
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { ILoginPayload } from './login.interface';
-import { EToastStatusType } from '../../../shared/interface/toastProps.interface';
+import { EToastStatusType } from '../../../shared/interface/toast.interface';
 
 import { postLogin } from './loginService';
 import { setToken } from '../../../shared/service/storageService';
 import { getErrorResponse } from '../../../shared/service/utilService';
 
-import Toast from '../../../shared/components/toast/Toast';
+import Toast, { ToastContext } from '../../../shared/components/toast/Toast';
 
 function LoginComponent() {
   const {
@@ -18,9 +18,10 @@ function LoginComponent() {
     formState: { errors },
   } = useForm<ILoginPayload>();
   const [loading, setLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [isSuccess, setIsSuccess] = useState<boolean>(false);
-  const [message, setMessage] = useState<string>('');
+  const { errorState, successState, messageState } = useContext(ToastContext);
+  const [isError, setIsError] = errorState;
+  const [isSuccess, setIsSuccess] = successState;
+  const [message, setMessage] = messageState;
   const navigate = useNavigate();
 
   const onSubmit = async (data: ILoginPayload): Promise<void> => {
@@ -31,7 +32,7 @@ function LoginComponent() {
       setMessage(loginResponse.message);
       setLoading(false);
       setIsSuccess(true);
-      navigate('/');
+      navigate('/dashboard');
     } catch (error) {
       const errorResponse = getErrorResponse(error);
       setMessage(errorResponse.message);
