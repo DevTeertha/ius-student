@@ -40,7 +40,6 @@ export class UserController {
         'User created successfully',
       );
     } catch (error) {
-      console.log('error: ', error);
       throw new HttpException(
         this.utilService.errorReponse(
           error?.message ?? 'User cannot be created',
