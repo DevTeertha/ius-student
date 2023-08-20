@@ -32,22 +32,6 @@ export class UpdateExperienceDto extends PartialType(CreateExperienceDto) {
 
   @IsOptional()
   @ApiProperty({
-    example: 'Narayanganj',
-    name: 'city',
-    required: true,
-  })
-  city: string;
-
-  @IsOptional()
-  @ApiProperty({
-    example: '1400',
-    name: 'postCode',
-    required: true,
-  })
-  postCode: string;
-
-  @IsOptional()
-  @ApiProperty({
     example: 'Bangladesh',
     name: 'country',
     required: true,

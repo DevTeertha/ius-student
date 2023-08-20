@@ -5,7 +5,7 @@ import { toastConfig } from './config';
 
 import { EToastStatusType, IToastContext, IToastProps } from '../../interface/toast.interface';
 
-export const ToastContext = createContext<IToastContext | null>(null);
+export const ToastContext = createContext<IToastContext | any>(null);
 
 function Toast({ message, state, status = 'success' }: IToastProps) {
   const [isTrigger, setIsTrigger] = state;

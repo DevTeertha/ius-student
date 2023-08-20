@@ -30,22 +30,6 @@ export class CreateExperienceDto {
 
   @IsNotEmpty()
   @ApiProperty({
-    example: 'Narayanganj',
-    name: 'city',
-    required: true,
-  })
-  city: string;
-
-  @IsNotEmpty()
-  @ApiProperty({
-    example: '1400',
-    name: 'postCode',
-    required: true,
-  })
-  postCode: string;
-
-  @IsNotEmpty()
-  @ApiProperty({
     example: 'Bangladesh',
     name: 'country',
     required: true,
