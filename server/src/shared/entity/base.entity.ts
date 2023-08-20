@@ -5,16 +5,16 @@ export abstract class BaseEntity {
   id?: number;
 
   @Column({ nullable: true, select: false })
-  created_at?: string;
+  createdAt?: string;
 
   @Column({ nullable: true, select: false })
-  updated_at?: string;
+  updatedAt?: string;
 
   /* Cannot add referrence with user entity because of seeding failed! */
   /* TypeError: Class extends value undefined is not a constructor or null */
   @Column({ nullable: true, select: false })
-  updated_by?: number;
+  updatedBy?: number;
 
   @Column({ nullable: true, select: false })
-  created_by?: number;
+  createdBy?: number;
 }

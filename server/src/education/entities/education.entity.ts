@@ -53,11 +53,11 @@ export class Education extends BaseEntity {
 
   @BeforeInsert()
   insertDate() {
-    this.created_at = new Date().toUTCString();
+    this.createdAt = new Date().toUTCString();
   }
 
   @BeforeUpdate()
   updateDate() {
-    this.updated_at = new Date().toUTCString();
+    this.updatedAt = new Date().toUTCString();
   }
 }

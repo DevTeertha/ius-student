@@ -1,4 +1,4 @@
-import AddOrEditStudentComponent from '../../components/student/AddOrEditStudent';
+import AddOrEditStudentComponent from '../../components/student/AddOrEditStudentComponent';
 
 function AddStudent() {
   return <AddOrEditStudentComponent />;

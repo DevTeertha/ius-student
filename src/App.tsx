@@ -5,8 +5,8 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Dashboard from './pages/dashboard';
-import AddStudent from './pages/dashboard/add-student';
+import Dashboard from './pages/dashboard/Dashboard';
+import AddStudent from './pages/dashboard/AddStudent';
 
 import { authGuard, notAuthGuard } from './shared/guard/auth/authGuard';
 

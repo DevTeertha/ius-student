@@ -19,6 +19,11 @@ export class CreateStudentDto {
   @ApiProperty({ example: 212010110, name: 'studentId', required: true })
   studentId: number;
 
+  @IsNumber()
+  @IsNotEmpty()
+  @ApiProperty({ example: 1, name: 'batch', required: true })
+  batch: number;
+
   @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 'Teertha Dev', name: 'firstName', required: true })

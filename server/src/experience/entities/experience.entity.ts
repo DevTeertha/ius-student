@@ -5,7 +5,6 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
-  PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { Student } from 'src/student/entities/student.entity';
@@ -21,12 +20,6 @@ export class Experience extends BaseEntity {
 
   @Column()
   address: string;
-
-  @Column()
-  city: string;
-
-  @Column()
-  postCode: string;
 
   @Column()
   country: string;
@@ -51,11 +44,11 @@ export class Experience extends BaseEntity {
 
   @BeforeInsert()
   insertDate() {
-    this.created_at = new Date().toUTCString();
+    this.createdAt = new Date().toUTCString();
   }
 
   @BeforeUpdate()
   updateDate() {
-    this.updated_at = new Date().toUTCString();
+    this.updatedAt = new Date().toUTCString();
   }
 }

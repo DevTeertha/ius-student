@@ -13,17 +13,22 @@ import {
 export class UpdateStudentDto extends PartialType(CreateStudentDto) {
   @IsNumber()
   @IsOptional()
-  @ApiProperty({ example: 212010110, name: 'studentId', required: true })
+  @ApiProperty({ example: 212010110, name: 'studentId', required: false })
   studentId?: number;
+
+  @IsNumber()
+  @IsOptional()
+  @ApiProperty({ example: 1, name: 'batch', required: false })
+  batch: number;
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: 'Teertha Dev', name: 'firstName', required: true })
+  @ApiProperty({ example: 'Teertha Dev', name: 'firstName', required: false })
   firstName?: string;
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: 'Sarker', name: 'lastName', required: true })
+  @ApiProperty({ example: 'Sarker', name: 'lastName', required: false })
   lastName?: string;
 
   @IsOptional()
@@ -56,7 +61,7 @@ export class UpdateStudentDto extends PartialType(CreateStudentDto) {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: 'Bangladesh', name: 'country', required: true })
+  @ApiProperty({ example: 'Bangladesh', name: 'country', required: false })
   country?: string;
 
   @IsString()
@@ -99,7 +104,7 @@ export class UpdateStudentDto extends PartialType(CreateStudentDto) {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: 'Bangladesh', name: 'imgUrl', required: true })
+  @ApiProperty({ example: 'Bangladesh', name: 'imgUrl', required: false })
   imgUrl?: string;
 
   @IsEmail()
@@ -107,12 +112,12 @@ export class UpdateStudentDto extends PartialType(CreateStudentDto) {
   @ApiProperty({
     example: 'devteertha28@gmail.com',
     name: 'email',
-    required: true,
+    required: false,
   })
   email: string;
 
   @IsOptional()
-  @ApiProperty({ example: '01672066834', name: 'phone', required: true })
+  @ApiProperty({ example: '01672066834', name: 'phone', required: false })
   phone: string;
 
   @IsString()
@@ -126,16 +131,24 @@ export class UpdateStudentDto extends PartialType(CreateStudentDto) {
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: '123456789789', name: 'fatherPhone', required: true })
+  @ApiProperty({
+    example: '123456789789',
+    name: 'fatherPhone',
+    required: false,
+  })
   fatherPhone?: string;
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: 'Rita Sarker', name: 'motherName', required: true })
+  @ApiProperty({ example: 'Rita Sarker', name: 'motherName', required: false })
   motherName?: string;
 
   @IsString()
   @IsOptional()
-  @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
+  @ApiProperty({
+    example: '123456789789',
+    name: 'motherPhone',
+    required: false,
+  })
   motherPhone?: string;
 }

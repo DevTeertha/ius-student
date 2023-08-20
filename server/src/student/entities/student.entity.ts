@@ -1,5 +1,6 @@
 import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
 
+import { BaseEntity } from 'src/shared/entity/base.entity';
 import { Education } from 'src/education/entities/education.entity';
 import { Experience } from 'src/experience/entities/experience.entity';
 
@@ -9,8 +10,6 @@ import {
   EReligion,
   EStudentType,
 } from '../enum/student.enum';
-
-import { BaseEntity } from 'src/shared/entity/base.entity';
 
 @Entity('students')
 export class Student extends BaseEntity {
@@ -25,6 +24,9 @@ export class Student extends BaseEntity {
 
   @Column({ type: 'enum', enum: EStudentType, default: EStudentType.REGULAR })
   type: EStudentType;
+
+  @Column({ nullable: true })
+  batch: number;
 
   @Column({ type: 'enum', enum: EGender, default: EGender.MALE })
   gender: EGender;
@@ -86,11 +88,11 @@ export class Student extends BaseEntity {
 
   @BeforeInsert()
   insertDate() {
-    this.created_at = new Date().toUTCString();
+    this.createdAt = new Date().toUTCString();
   }
 
   @BeforeUpdate()
   updateDate() {
-    this.updated_at = new Date().toUTCString();
+    this.updatedAt = new Date().toUTCString();
   }
 }
