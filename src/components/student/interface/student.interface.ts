@@ -1,3 +1,5 @@
+import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
+
 export interface IAddStudentPayload {
   studentId: string;
   batch: string;
