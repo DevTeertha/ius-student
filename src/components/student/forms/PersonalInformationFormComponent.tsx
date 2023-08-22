@@ -145,7 +145,7 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
           <label className='label'>
             <span className='text-base label-text'>Date of birth</span>
           </label>
-          <input {...register('dateOfBirth', { required: true })} type='date' className={`w-full input input-bordered input-light border-gray-500 ${errors.dateOfBirth && 'border-red-600'}`} />
+          <input {...register('dateOfBirth')} type='date' className={`w-full input input-bordered input-light border-gray-500 ${errors.dateOfBirth && 'border-red-600'}`} />
           {errors.dateOfBirth && <span className='text-red-600'>Date of birth is required</span>}
         </div>
       </div>
@@ -208,7 +208,7 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
           <label className='label'>
             <span className='text-base label-text'>Father's Phone (Optional)</span>
           </label>
-          <input placeholder='Enter Father"s Phone Address' {...register('fatherPhone', { required: true })} type='text' className={`w-full input input-bordered input-light border-gray-500`} />
+          <input placeholder='Enter Father"s Phone Address' {...register('fatherPhone')} type='text' className={`w-full input input-bordered input-light border-gray-500`} />
         </div>
       </div>
       <div className='grid md:grid-cols-2 sm:grid-cols-1 gap-4'>
@@ -228,7 +228,7 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
           <label className='label'>
             <span className='text-base label-text'>Mother's Phone (Optional)</span>
           </label>
-          <input placeholder='Enter Mother"s Phone Address' {...register('motherPhone', { required: true })} type='text' className={`w-full input input-bordered input-light border-gray-500`} />
+          <input placeholder='Enter Mother"s Phone Address' {...register('motherPhone')} type='text' className={`w-full input input-bordered input-light border-gray-500`} />
         </div>
       </div>
     </div>

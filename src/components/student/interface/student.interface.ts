@@ -1,5 +1,3 @@
-import { FieldErrors, FieldValues, UseFormRegister } from 'react-hook-form';
-
 export interface IAddStudentPayload {
   studentId: string;
   batch: string;
@@ -21,6 +19,7 @@ export interface IAddStudentPayload {
   motherName: string;
   motherPhone: string;
   experiences: IExperience[];
+  educations: IEducation[];
 }
 
 export interface IExperience {
@@ -32,4 +31,16 @@ export interface IExperience {
   startFrom: string;
   endFrom: string;
   isCurrentEmployee: boolean;
+}
+
+export interface IEducation {
+  credits?: number;
+  instituteName: string;
+  degreeType: string;
+  degreeName: string;
+  department: string;
+  batch?: number;
+  seassonYear: number;
+  graduationYear: number;
+  isCurrent: boolean;
 }

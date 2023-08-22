@@ -1,5 +1,6 @@
 import Axios, { AxiosError } from 'axios';
 import { IHttpResponse } from '../interface/httpResponse.interface';
+import { getToken } from './storageService';
 
 const globalError = {
   status: false,
@@ -18,4 +19,11 @@ export const getErrorResponse = <T>(error: any): IHttpResponse<any> => {
   } else {
     return globalError;
   }
+};
+
+export const getHttpHeaders = () => {
+  return {
+    'Content-Type': 'application/json',
+    Authorization: getToken(),
+  };
 };

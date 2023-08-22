@@ -10,6 +10,8 @@ import { IToastContext } from '../../shared/interface/toast.interface';
 import NavbarComponent from '../navbar/NavbarComponent';
 import PersonalInformationFormComponent from './forms/PersonalInformationFormComponent';
 import ExperienceFormComponent from './forms/ExperienceFormComponent';
+import EducationFormComponent from './forms/EducationFormComponent';
+import { createStudent } from './studentService';
 
 function AddOrEditStudentComponent() {
   const {
@@ -18,9 +20,22 @@ function AddOrEditStudentComponent() {
     control,
     formState: { errors },
   } = useForm<IAddStudentPayload>();
-  const { fields, append, remove } = useFieldArray({
+  const {
+    fields: experienceField,
+    append: experienceAppend,
+    remove: experienceRemove,
+  } = useFieldArray({
     control,
-    name: 'experiences', // This should match the name of the field in your form
+    name: 'experiences',
+  });
+
+  const {
+    fields: educationField,
+    append: educationAppend,
+    remove: educationRemove,
+  } = useFieldArray({
+    control,
+    name: 'educations',
   });
 
   const { errorState, successState, messageState } = useContext<IToastContext>(ToastContext);
@@ -30,12 +45,14 @@ function AddOrEditStudentComponent() {
   const [message, setMessage] = messageState;
   const navigate = useNavigate();
 
-  const onSubmit = (data: IAddStudentPayload) => {
+  const onSubmit = async (data: IAddStudentPayload) => {
     try {
       // setLoading(true);
-
-      console.log('data: ', data);
-    } catch (error) {}
+      const res = await createStudent(data);
+      console.log('res: ', res);
+    } catch (error) {
+      console.log('error: ', error);
+    }
   };
   return (
     <>
@@ -45,7 +62,8 @@ function AddOrEditStudentComponent() {
           <h1 className='text-2xl font-bold'>Add / Edit Student</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <PersonalInformationFormComponent register={register} errors={errors} />
-            <ExperienceFormComponent fields={fields} append={append} remove={remove} register={register} />
+            <ExperienceFormComponent fields={experienceField} append={experienceAppend} remove={experienceRemove} register={register} errors={errors} />
+            <EducationFormComponent fields={educationField} append={educationAppend} remove={educationRemove} register={register} errors={errors} />
             <div className='mt-3'>
               <button disabled={loading} className='btn bg-gray-900 text-white hover:bg-gray-950 hover:text-white'>
                 {loading && <span className='loading loading-ring loading-md'></span>}Add
