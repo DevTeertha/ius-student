@@ -18,7 +18,7 @@ export class Education extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column()
+  @Column({ nullable: true })
   credits: number;
 
   @Column()

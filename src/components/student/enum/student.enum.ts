@@ -29,3 +29,12 @@ export enum EJobType {
   PART_TIME = 'Part Time',
   CONTRACT = 'Contract',
 }
+
+export enum EDegreeType {
+  SSC = 'SSC',
+  HSC = 'HSC',
+  BBA = 'BBA',
+  BSC = 'BSC',
+  MSC = 'MSC',
+  MBA = 'MBA',
+}
