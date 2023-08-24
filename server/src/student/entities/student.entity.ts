@@ -80,10 +80,14 @@ export class Student extends BaseEntity {
   @Column({ nullable: true })
   motherPhone: string;
 
-  @OneToMany(() => Education, (education: Education) => education.student)
+  @OneToMany(() => Education, (education: Education) => education.student, {
+    cascade: ['insert'],
+  })
   educations: Education[];
 
-  @OneToMany(() => Experience, (experience: Experience) => experience.student)
+  @OneToMany(() => Experience, (experience: Experience) => experience.student, {
+    cascade: ['insert'],
+  })
   experiences: Experience[];
 
   @BeforeInsert()

@@ -12,7 +12,7 @@ export interface IAddStudentPayload {
   maritalStatus: string;
   religion: string;
   imgUrl: string;
-  email: string;
+  email: string | null;
   phone: string;
   fatherName: string;
   fatherPhone: string;

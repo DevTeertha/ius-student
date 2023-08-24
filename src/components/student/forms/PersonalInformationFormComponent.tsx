@@ -69,7 +69,7 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
           <label className='label'>
             <span className='text-base label-text'>Email (optional)</span>
           </label>
-          <input placeholder='Enter Email' {...register('email', { required: false })} type='text' className={`w-full input input-bordered input-light border-gray-500`} />
+          <input placeholder='Enter Email' {...register('email', { required: false, value: null })} type='text' className={`w-full input input-bordered input-light border-gray-500`} />
         </div>
         <div>
           <label className='label'>
@@ -218,7 +218,7 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
           </label>
           <input
             placeholder='Enter Mother"s Name'
-            {...register('fatherName', { required: true })}
+            {...register('motherName', { required: true })}
             type='text'
             className={`w-full input input-bordered input-light border-gray-500 ${errors.motherName && 'border-red-600'}`}
           />

@@ -1,17 +1,19 @@
 import { useContext, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
 
-import { ToastContext } from '../../shared/components/toast/Toast';
+import Toast, { ToastContext } from '../../shared/components/toast/Toast';
 
 import { IAddStudentPayload } from './interface/student.interface';
-import { IToastContext } from '../../shared/interface/toast.interface';
+import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
 
 import NavbarComponent from '../navbar/NavbarComponent';
+
 import PersonalInformationFormComponent from './forms/PersonalInformationFormComponent';
 import ExperienceFormComponent from './forms/ExperienceFormComponent';
 import EducationFormComponent from './forms/EducationFormComponent';
+
 import { createStudent } from './studentService';
+import { getErrorResponse } from '../../shared/service/utilService';
 
 function AddOrEditStudentComponent() {
   const {
@@ -43,19 +45,25 @@ function AddOrEditStudentComponent() {
   const [isError, setIsError] = errorState;
   const [isSuccess, setIsSuccess] = successState;
   const [message, setMessage] = messageState;
-  const navigate = useNavigate();
 
   const onSubmit = async (data: IAddStudentPayload) => {
     try {
-      // setLoading(true);
+      setLoading(true);
       const res = await createStudent(data);
-      console.log('res: ', res);
+      setMessage(res?.message ?? 'Student added succesfully');
+      setLoading(false);
+      setIsSuccess(true);
     } catch (error) {
-      console.log('error: ', error);
+      const errorResponse = getErrorResponse(error);
+      setMessage(errorResponse.message);
+      setLoading(false);
+      setIsError(true);
     }
   };
   return (
     <>
+      {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
+      {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
       <NavbarComponent />
       <div className='p-4 mt-5'>
         <div>
