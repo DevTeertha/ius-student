@@ -32,7 +32,7 @@ export class StudentController {
 
   @Post()
   @UseGuards(JwtAuthGuard)
-  @ApiBearerAuth('JWT-auth')
+  @ApiBearerAuth()
   async create(
     @Body() createStudentDto: CreateStudentDto,
   ): Promise<ResponseDTO<StudentDto>> {

@@ -14,12 +14,12 @@ import {
 } from '../enum/student.enum';
 
 export class CreateStudentDto {
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 212010110, name: 'studentId', required: true })
   studentId: number;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @ApiProperty({ example: 1, name: 'batch', required: true })
   batch: number;
@@ -110,12 +110,13 @@ export class CreateStudentDto {
   @ApiProperty({ example: 'Bangladesh', name: 'imgUrl', required: true })
   imgUrl: string;
 
+  @IsOptional()
   @IsEmail()
-  @IsNotEmpty()
   @ApiProperty({
     example: 'devteertha28@gmail.com',
     name: 'email',
-    required: true,
+    required: false,
+    nullable: true,
   })
   email: string;
 

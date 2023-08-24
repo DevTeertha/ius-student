@@ -46,9 +46,9 @@ export class Education extends BaseEntity {
   isCurrent: boolean;
 
   @ManyToOne(() => Student, (student: Student) => student.id, {
-    cascade: ['insert', 'update', 'remove'],
+    onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'student_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'studentId', referencedColumnName: 'id' })
   student: Student | number;
 
   @BeforeInsert()

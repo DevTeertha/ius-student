@@ -36,10 +36,8 @@ export class Experience extends BaseEntity {
   @Column({ default: true })
   isCurrentEmployee: boolean;
 
-  @ManyToOne(() => Student, (student: Student) => student.experiences, {
-    cascade: ['insert', 'update', 'remove'],
-  })
-  @JoinColumn({ name: 'student_id', referencedColumnName: 'id' })
+  @ManyToOne(() => Student, (student: Student) => student.experiences)
+  @JoinColumn({ name: 'studentId', referencedColumnName: 'id' })
   student: Student | number;
 
   @BeforeInsert()

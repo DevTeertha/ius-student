@@ -1,7 +1,7 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { plainToClass } from 'class-transformer';
-import { Repository } from 'typeorm';
+import { FindOneOptions, Repository } from 'typeorm';
 
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
@@ -17,6 +17,14 @@ export class StudentService {
   ) {}
   async create(createStudentDto: CreateStudentDto): Promise<StudentDto> {
     const student = plainToClass(Student, createStudentDto);
+    const existingStudent = await this.findByFields({
+      where: {
+        studentId: student.studentId,
+      },
+    });
+    if (existingStudent) {
+      throw new HttpException('Student id already exist', HttpStatus.FOUND);
+    }
     return await this.studentRepository.save(student);
   }
 
@@ -31,6 +39,10 @@ export class StudentService {
       where: { id },
       relations: ['experiences', 'educations'],
     });
+  }
+
+  async findByFields(options: FindOneOptions<Student>): Promise<StudentDto> {
+    return await this.studentRepository.findOneOrFail(options);
   }
 
   async update(
