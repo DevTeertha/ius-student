@@ -48,7 +48,7 @@ export class Education extends BaseEntity {
   @ManyToOne(() => Student, (student: Student) => student.id, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'studentId', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'student', referencedColumnName: 'id' })
   student: Student | number;
 
   @BeforeInsert()

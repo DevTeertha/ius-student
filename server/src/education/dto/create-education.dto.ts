@@ -40,7 +40,7 @@ export class CreateEducationDto {
   @ApiProperty({ example: 'Computer Science & Engineering' })
   department: string;
 
-  @IsString()
+  @IsNumber()
   @IsOptional()
   @ApiProperty({ example: 10 })
   batch: number;
@@ -58,7 +58,6 @@ export class CreateEducationDto {
   @ApiProperty({ example: true })
   isCurrent: boolean;
 
-  @IsOptional()
   @ApiProperty({ type: Student, example: 1 })
   student: Student | number;
 }

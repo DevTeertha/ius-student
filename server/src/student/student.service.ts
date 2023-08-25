@@ -42,7 +42,7 @@ export class StudentService {
   }
 
   async findByFields(options: FindOneOptions<Student>): Promise<StudentDto> {
-    return await this.studentRepository.findOneOrFail(options);
+    return await this.studentRepository.findOne(options);
   }
 
   async update(

@@ -4,8 +4,6 @@ import { IsNumber, IsString, IsOptional, IsBoolean } from 'class-validator';
 
 import { CreateEducationDto } from './create-education.dto';
 
-import { Student } from 'src/student/entities/student.entity';
-
 import { EDegreeType } from '../enum/education.enum';
 
 export class UpdateEducationDto extends PartialType(CreateEducationDto) {
@@ -38,7 +36,7 @@ export class UpdateEducationDto extends PartialType(CreateEducationDto) {
   @ApiProperty({ example: 'Computer Science & Engineering' })
   department?: string;
 
-  @IsString()
+  @IsNumber()
   @IsOptional()
   @ApiProperty({ example: 10 })
   batch?: number;
