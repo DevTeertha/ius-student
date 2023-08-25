@@ -1,6 +1,9 @@
+import { useQuery } from 'react-query';
 import StudentListComponent from '../student/StudentListComponent';
+import { getStudents } from '../student/studentService';
 
 function HomeComponent({ children, showAddButton = false }: any) {
+  const { data } = useQuery('getStudents', getStudents);
   return (
     <>
       <div className='grid grid-flow-row-dense grid-cols-5 my-5'>
@@ -18,7 +21,7 @@ function HomeComponent({ children, showAddButton = false }: any) {
         </div>
         {children}
       </div>
-      <StudentListComponent />
+      <StudentListComponent data={data?.data ?? []} />
     </>
   );
 }

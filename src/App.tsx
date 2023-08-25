@@ -2,6 +2,7 @@ import './App.css';
 
 import { useState } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
@@ -36,22 +37,26 @@ const router = createBrowserRouter([
   },
 ]);
 
+const client = new QueryClient();
+
 function App() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
 
   return (
-    <ToastContext.Provider
-      value={{
-        errorState: [isError, setIsError],
-        successState: [isSuccess, setIsSuccess],
-        messageState: [message, setMessage],
-      }}>
-      {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
-      {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
-      <RouterProvider router={router} />
-    </ToastContext.Provider>
+    <QueryClientProvider client={client}>
+      <ToastContext.Provider
+        value={{
+          errorState: [isError, setIsError],
+          successState: [isSuccess, setIsSuccess],
+          messageState: [message, setMessage],
+        }}>
+        {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
+        {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
+        <RouterProvider router={router} />
+      </ToastContext.Provider>
+    </QueryClientProvider>
   );
 }
 

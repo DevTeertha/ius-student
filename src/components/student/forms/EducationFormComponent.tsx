@@ -3,12 +3,12 @@ import dayjs from 'dayjs';
 
 import { EDegreeType, EJobType } from '../enum/student.enum';
 
-import { IAddStudentPayload } from '../interface/student.interface';
+import { IStudent } from '../interface/student.interface';
 import { IPersonalInformationUseFormProps } from './PersonalInformationFormComponent';
 
 export interface IEducationUseFormProps extends IPersonalInformationUseFormProps {
-  fields: FieldArrayWithId<IAddStudentPayload, 'educations', 'id'>[];
-  append: UseFieldArrayAppend<IAddStudentPayload, 'educations'>;
+  fields: FieldArrayWithId<IStudent, 'educations', 'id'>[];
+  append: UseFieldArrayAppend<IStudent, 'educations'>;
   remove: UseFieldArrayRemove;
 }
 

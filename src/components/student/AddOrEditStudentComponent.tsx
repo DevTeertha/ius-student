@@ -3,7 +3,7 @@ import { useFieldArray, useForm } from 'react-hook-form';
 
 import Toast, { ToastContext } from '../../shared/components/toast/Toast';
 
-import { IAddStudentPayload } from './interface/student.interface';
+import { IStudent } from './interface/student.interface';
 import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
 
 import NavbarComponent from '../navbar/NavbarComponent';
@@ -14,6 +14,7 @@ import EducationFormComponent from './forms/EducationFormComponent';
 
 import { createStudent } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
+import { useNavigate } from 'react-router-dom';
 
 function AddOrEditStudentComponent() {
   const {
@@ -21,7 +22,7 @@ function AddOrEditStudentComponent() {
     handleSubmit,
     control,
     formState: { errors },
-  } = useForm<IAddStudentPayload>();
+  } = useForm<IStudent>();
   const {
     fields: experienceField,
     append: experienceAppend,
@@ -45,14 +46,16 @@ function AddOrEditStudentComponent() {
   const [isError, setIsError] = errorState;
   const [isSuccess, setIsSuccess] = successState;
   const [message, setMessage] = messageState;
+  const navigate = useNavigate();
 
-  const onSubmit = async (data: IAddStudentPayload) => {
+  const onSubmit = async (data: IStudent) => {
     try {
       setLoading(true);
       const res = await createStudent(data);
       setMessage(res?.message ?? 'Student added succesfully');
       setLoading(false);
       setIsSuccess(true);
+      navigate('/dashboard');
     } catch (error) {
       const errorResponse = getErrorResponse(error);
       setMessage(errorResponse.message);
