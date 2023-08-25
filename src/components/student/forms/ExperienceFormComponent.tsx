@@ -2,13 +2,13 @@ import { FieldArrayWithId, UseFieldArrayAppend, UseFieldArrayRemove } from 'reac
 
 import { EJobType } from '../enum/student.enum';
 
-import { IAddStudentPayload } from '../interface/student.interface';
+import { IStudent } from '../interface/student.interface';
 import { IPersonalInformationUseFormProps } from './PersonalInformationFormComponent';
 import dayjs from 'dayjs';
 
 export interface IExperienceUseFormProps extends IPersonalInformationUseFormProps {
-  fields: FieldArrayWithId<IAddStudentPayload, 'experiences', 'id'>[];
-  append: UseFieldArrayAppend<IAddStudentPayload, 'experiences'>;
+  fields: FieldArrayWithId<IStudent, 'experiences', 'id'>[];
+  append: UseFieldArrayAppend<IStudent, 'experiences'>;
   remove: UseFieldArrayRemove;
 }
 

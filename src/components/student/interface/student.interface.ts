@@ -1,6 +1,6 @@
-export interface IAddStudentPayload {
-  studentId: string;
-  batch: string;
+export interface IStudent {
+  studentId: number;
+  batch: number;
   firstName: string;
   lastName: string;
   type: string;

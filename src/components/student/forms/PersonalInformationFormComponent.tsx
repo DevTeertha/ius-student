@@ -1,11 +1,11 @@
 import { UseFormRegister, FieldErrors } from 'react-hook-form';
 
 import { EStudentType, EGender, EMaritalStatus, EReligion } from '../enum/student.enum';
-import { IAddStudentPayload } from '../interface/student.interface';
+import { IStudent } from '../interface/student.interface';
 
 export interface IPersonalInformationUseFormProps {
-  register: UseFormRegister<IAddStudentPayload>;
-  errors: FieldErrors<IAddStudentPayload>;
+  register: UseFormRegister<IStudent>;
+  errors: FieldErrors<IStudent>;
 }
 
 const PersonalInformationFormComponent = ({ register, errors }: IPersonalInformationUseFormProps) => {

@@ -1,29 +1,25 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsNumber,
-  IsNotEmpty,
-  IsString,
-  IsEmail,
-  IsOptional,
-} from 'class-validator';
+import { IsNotEmpty, IsString, IsEmail, IsOptional } from 'class-validator';
+
 import {
   EStudentType,
   EGender,
   EMaritalStatus,
   EReligion,
 } from '../enum/student.enum';
+
 import { EducationDto } from 'src/education/dto/education.dto';
 import { ExperienceDto } from 'src/experience/dto/experience.dto';
 
 export class CreateStudentDto {
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  @ApiProperty({ example: 212010110, name: 'studentId', required: true })
+  @ApiProperty({ example: '212010110', name: 'studentId', required: true })
   studentId: number;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
-  @ApiProperty({ example: 1, name: 'batch', required: true })
+  @ApiProperty({ example: '1', name: 'batch', required: true })
   batch: number;
 
   @IsString()
