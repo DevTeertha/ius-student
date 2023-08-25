@@ -37,7 +37,7 @@ export class Experience extends BaseEntity {
   isCurrentEmployee: boolean;
 
   @ManyToOne(() => Student, (student: Student) => student.experiences)
-  @JoinColumn({ name: 'studentId', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'student', referencedColumnName: 'id' })
   student: Student | number;
 
   @BeforeInsert()

@@ -12,14 +12,16 @@ import {
   EMaritalStatus,
   EReligion,
 } from '../enum/student.enum';
+import { EducationDto } from 'src/education/dto/education.dto';
+import { ExperienceDto } from 'src/experience/dto/experience.dto';
 
 export class CreateStudentDto {
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ example: 212010110, name: 'studentId', required: true })
   studentId: number;
 
-  @IsString()
+  @IsNumber()
   @IsNotEmpty()
   @ApiProperty({ example: 1, name: 'batch', required: true })
   batch: number;
@@ -147,4 +149,49 @@ export class CreateStudentDto {
   @IsOptional()
   @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
   motherPhone: string;
+
+  @IsOptional()
+  @ApiProperty({
+    type: [EducationDto],
+    example: [
+      {
+        credits: 140,
+        instituteName: 'The International University Of Scholars',
+        degreeType: 'BSC',
+        degreeName: 'Bachelor of Science',
+        department: 'Computer Science & Engineering',
+        batch: 10,
+        seassonYear: 2018,
+        graduationYear: 2024,
+        isCurrent: true,
+        student: 1,
+      },
+    ],
+    isArray: true,
+    name: 'educations',
+    required: true,
+  })
+  educations: EducationDto[];
+
+  @IsOptional()
+  @ApiProperty({
+    type: [ExperienceDto],
+    example: [
+      {
+        companyName: 'Mind Orbital Technologies',
+        jobType: 'Full Time',
+        adress: '27 no college road',
+        country: 'Bangladesh',
+        designation: 'Software Engineer',
+        startFrom: 'Fri, 25 Aug 2023 17:35:58 GMT',
+        endFrom: 'Fri, 25 Aug 2023 17:35:58 GMT',
+        isCurrentEmployee: true,
+        student: 1,
+      },
+    ],
+    isArray: true,
+    name: 'experiences',
+    required: true,
+  })
+  experiences: ExperienceDto[];
 }
