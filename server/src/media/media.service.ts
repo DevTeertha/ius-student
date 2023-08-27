@@ -25,7 +25,7 @@ export class MediaService {
       contentType: 'image/jpeg',
     });
     const url = await getDownloadURL(upload.ref);
-
+    await fs.unlink(file.path);
     return {
       key,
       url,
