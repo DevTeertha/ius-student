@@ -6,6 +6,7 @@ import { ExperienceModule } from './experience/experience.module';
 import { StudentModule } from './student/student.module';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
+import { MediaModule } from './media/media.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserModule } from './user/user.module';
     EducationModule,
     ExperienceModule,
     UserModule,
+    MediaModule,
   ],
 })
 export class AppModule {}

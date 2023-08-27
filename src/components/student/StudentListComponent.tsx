@@ -17,6 +17,20 @@ function StudentListComponent({ data }: { data: IStudent[] }) {
               <Card.Title tag='h6' className='text-sm'>
                 {student?.firstName + ' ' + student?.lastName}
               </Card.Title>
+              <div>
+                {student?.email && (
+                  <p className='text-xs'>
+                    <b>Email: </b>
+                    {student.email}
+                  </p>
+                )}
+                {student?.phone && (
+                  <p className='text-xs'>
+                    <b>Phone: </b>
+                    {student.phone}
+                  </p>
+                )}
+              </div>
             </Card.Body>
           </Card>
         ))}
