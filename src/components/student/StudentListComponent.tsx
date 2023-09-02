@@ -1,8 +1,20 @@
+import { useState } from 'react';
 import { Card } from 'react-daisyui';
+
 import { IStudent } from './interface/student.interface';
 
+import Pagination from '../../shared/components/toast/Pagination';
+
 function StudentListComponent({ data }: { data: IStudent[] }) {
-  console.log('data: ', data);
+  let itemsPerPage = 15;
+  const [itemOffset, setItemOffset] = useState(0);
+
+  const handlePageClick = (event: any) => {
+    const newOffset = (event.selected * itemsPerPage) % data.length;
+    console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
+    setItemOffset(newOffset);
+  };
+
   return (
     <>
       <div className='grid grid-flow-row lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-1'>
@@ -35,6 +47,7 @@ function StudentListComponent({ data }: { data: IStudent[] }) {
           </Card>
         ))}
       </div>
+      <Pagination itemOffset={itemOffset} data={data} handlePageClick={handlePageClick} itemsPerPage={itemsPerPage} />
     </>
   );
 }

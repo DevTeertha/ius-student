@@ -1,5 +1,6 @@
 import { useContext, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
+import { Link, useNavigate } from 'react-router-dom';
 
 import Toast, { ToastContext } from '../../shared/components/toast/Toast';
 
@@ -14,7 +15,6 @@ import EducationFormComponent from './forms/EducationFormComponent';
 
 import { createStudent } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
-import { useNavigate } from 'react-router-dom';
 
 function AddOrEditStudentComponent() {
   const {
@@ -76,6 +76,9 @@ function AddOrEditStudentComponent() {
             <ExperienceFormComponent fields={experienceField} append={experienceAppend} remove={experienceRemove} register={register} errors={errors} />
             <EducationFormComponent fields={educationField} append={educationAppend} remove={educationRemove} register={register} errors={errors} />
             <div className='mt-3'>
+              <button type='button' className='btn mr-3'>
+                <Link to={'/dashboard'}>Back</Link>
+              </button>
               <button disabled={loading} className='btn bg-gray-900 text-white hover:bg-gray-950 hover:text-white'>
                 {loading && <span className='loading loading-ring loading-md'></span>}Add
               </button>
