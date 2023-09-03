@@ -1,3 +1,8 @@
+export interface IStudentPaginationResponse {
+  count: number;
+  students: IStudent[];
+}
+
 export interface IStudent {
   studentId: number;
   batch: number;

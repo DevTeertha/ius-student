@@ -3,7 +3,7 @@ import StudentListComponent from '../student/StudentListComponent';
 import { getStudents } from '../student/studentService';
 
 function HomeComponent({ children, showAddButton = false }: any) {
-  const { data } = useQuery('getStudents', getStudents);
+  const { data, isLoading, error } = useQuery(['getStudents', {}], getStudents);
   return (
     <>
       <div className='grid grid-flow-row-dense grid-cols-5 my-5'>
@@ -21,7 +21,7 @@ function HomeComponent({ children, showAddButton = false }: any) {
         </div>
         {children}
       </div>
-      <StudentListComponent data={data?.data ?? []} />
+      <StudentListComponent count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
     </>
   );
 }
