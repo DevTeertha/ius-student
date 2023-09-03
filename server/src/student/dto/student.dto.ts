@@ -7,6 +7,11 @@ import {
   EStudentType,
 } from '../enum/student.enum';
 
+export class StudentPaginationResponseDto {
+  count: number;
+  students: StudentDto[];
+}
+
 export class StudentDto {
   @IsNumber()
   @IsNotEmpty()

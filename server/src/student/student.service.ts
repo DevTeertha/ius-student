@@ -5,7 +5,7 @@ import { FindOneOptions, Repository } from 'typeorm';
 
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
-import { StudentDto } from './dto/student.dto';
+import { StudentDto, StudentPaginationResponseDto } from './dto/student.dto';
 
 import { Student } from './entities/student.entity';
 
@@ -28,10 +28,30 @@ export class StudentService {
     return await this.studentRepository.save(student);
   }
 
-  async findAll(): Promise<StudentDto[]> {
-    return await this.studentRepository.find({
-      relations: ['experiences', 'educations'],
-    });
+  async findAll({
+    offset,
+    limit,
+  }: {
+    offset: number;
+    limit: number;
+  }): Promise<StudentPaginationResponseDto> {
+    const findQuery = this.studentRepository
+      .createQueryBuilder('student')
+      .leftJoinAndSelect('student.experiences', 'experience')
+      .leftJoinAndSelect('student.educations', 'education');
+    if (offset) {
+      findQuery.offset(offset);
+    }
+
+    if (limit) {
+      findQuery.limit(limit);
+    }
+
+    const [students, count] = await findQuery.getManyAndCount();
+    return {
+      count,
+      students,
+    };
   }
 
   async findOne(id: number): Promise<StudentDto> {

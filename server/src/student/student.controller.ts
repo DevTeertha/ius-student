@@ -9,8 +9,9 @@ import {
   HttpException,
   HttpStatus,
   UseGuards,
+  Query,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiQuery, ApiTags } from '@nestjs/swagger';
 
 import { StudentService } from './student.service';
 import { UtilService } from 'src/shared/services/util.service';
@@ -18,7 +19,7 @@ import { UtilService } from 'src/shared/services/util.service';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { ResponseDTO } from 'src/shared/dto/response.dto';
-import { StudentDto } from './dto/student.dto';
+import { StudentDto, StudentPaginationResponseDto } from './dto/student.dto';
 
 import { JwtAuthGuard } from 'src/shared/guards/jwt-auth.guard';
 
@@ -52,10 +53,28 @@ export class StudentController {
   }
 
   @Get()
-  async findAll(): Promise<ResponseDTO<StudentDto[]>> {
+  @ApiQuery({
+    name: 'offset',
+    required: false,
+    type: String,
+    description: 'Page Number',
+  })
+  @ApiQuery({
+    name: 'limit',
+    required: false,
+    type: Number,
+    description: 'Page Limit',
+  })
+  async findAll(
+    @Query() { offset, limit }: { offset: number; limit: number },
+  ): Promise<ResponseDTO<StudentPaginationResponseDto>> {
     try {
+      const { count, students } = await this.studentService.findAll({
+        offset,
+        limit,
+      });
       return this.utilService.successReponse(
-        await this.studentService.findAll(),
+        { count, students },
         'Student record successfully retrieved',
       );
     } catch (error) {
