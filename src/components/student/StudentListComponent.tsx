@@ -1,33 +1,12 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Card } from 'react-daisyui';
 
 import { IStudent } from './interface/student.interface';
 
 import Pagination from '../../shared/components/toast/Pagination';
-import { getStudents } from './studentService';
 
-function StudentListComponent({ students, count }: { students: IStudent[]; count: number }) {
-  let itemsPerPage = 5;
-  const [itemOffset, setItemOffset] = useState(0);
-
-  const handlePageClick = async (event: { selected: number }) => {
-    const newOffset = (event.selected * itemsPerPage) % students.length;
-    console.log(`User requested page number ${event.selected}, which is offset ${newOffset}`);
-    const studentResponse = await getStudents({
-      queryKey: [
-        'getStudentWithPagination',
-        {
-          limit: itemsPerPage,
-          offset: newOffset,
-        },
-      ],
-      meta: undefined,
-    });
-    console.log('studentResponse: ', studentResponse);
-    setItemOffset(newOffset);
-  };
-
+export const itemsPerPage = 5;
+function StudentListComponent({ students, count, handlePageClick }: { students: IStudent[]; count: number; handlePageClick: (event: any) => void }) {
   return (
     <>
       <div className='grid grid-flow-row lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-1'>
