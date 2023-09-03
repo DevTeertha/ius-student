@@ -1,11 +1,27 @@
-import { useQuery } from 'react-query';
+import { memo, useState } from 'react';
+import { useQuery, useQueryClient } from 'react-query';
+
 import StudentListComponent from '../student/StudentListComponent';
+
 import { getStudents } from '../student/studentService';
+import TransparentSpinner from '../../shared/components/spinner/TransparentSpinner';
+
+export const PAGE_SIZE = 5;
 
 function HomeComponent({ children, showAddButton = false }: any) {
-  const { data, isLoading, error } = useQuery(['getStudents', {}], getStudents);
+  const [currentPage, setCurrentPage] = useState(1);
+  const queryClient = useQueryClient();
+  const { data, isLoading } = useQuery(['getStudents', { limit: PAGE_SIZE, offset: (currentPage - 1) * PAGE_SIZE }], getStudents);
+
+  const handlePageClick = async (event: { selected: number }) => {
+    const newPage = event.selected + 1;
+    setCurrentPage(newPage);
+    queryClient.invalidateQueries(['getStudents', { limit: PAGE_SIZE, offset: (newPage - 1) * PAGE_SIZE }]);
+  };
+
   return (
     <>
+      {isLoading && <TransparentSpinner />}
       <div className='grid grid-flow-row-dense grid-cols-5 my-5'>
         <div className={showAddButton ? 'col-span-4' : 'col-span-5'}>
           <div className='text-center'>
@@ -21,9 +37,9 @@ function HomeComponent({ children, showAddButton = false }: any) {
         </div>
         {children}
       </div>
-      <StudentListComponent count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
+      <StudentListComponent handlePageClick={handlePageClick} count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
     </>
   );
 }
 
-export default HomeComponent;
+export default memo(HomeComponent);
