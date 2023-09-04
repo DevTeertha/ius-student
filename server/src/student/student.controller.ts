@@ -38,7 +38,6 @@ export class StudentController {
     @Body() createStudentDto: CreateStudentDto,
   ): Promise<ResponseDTO<StudentDto>> {
     try {
-      // console.log('createStudentDto: ', createStudentDto.education);
       return this.utilService.successReponse(
         await this.studentService.create(createStudentDto),
         'Student created successfully',
