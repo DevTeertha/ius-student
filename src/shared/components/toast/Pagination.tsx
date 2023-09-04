@@ -1,13 +1,13 @@
 import ReactPaginate from 'react-paginate';
 
 export interface IPaginationParams {
-  itemsPerPage: number;
+  PAGE_SIZE: number;
   handlePageClick: (event: any) => void;
   count: number;
 }
 
-const Pagination = ({ itemsPerPage, handlePageClick, count }: IPaginationParams) => {
-  const pageCount = Math.ceil(count / itemsPerPage);
+const Pagination = ({ PAGE_SIZE, handlePageClick, count }: IPaginationParams) => {
+  const pageCount = Math.ceil(count / PAGE_SIZE);
   return (
     <ReactPaginate
       containerClassName='flex items-center justify-center mt-8 mb-4'

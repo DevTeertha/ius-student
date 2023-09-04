@@ -6,7 +6,7 @@ import StudentListComponent from '../student/StudentListComponent';
 import { getStudents } from '../student/studentService';
 import TransparentSpinner from '../../shared/components/spinner/TransparentSpinner';
 
-export const PAGE_SIZE = 5;
+export const PAGE_SIZE = 8;
 
 function HomeComponent({ children, showAddButton = false }: any) {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,11 +1,12 @@
 import { Link } from 'react-router-dom';
 import { Card } from 'react-daisyui';
 
+import { PAGE_SIZE } from '../home/HomeComponent';
+
 import { IStudent } from './interface/student.interface';
 
 import Pagination from '../../shared/components/toast/Pagination';
 
-export const itemsPerPage = 5;
 function StudentListComponent({ students, count, handlePageClick }: { students: IStudent[]; count: number; handlePageClick: (event: any) => void }) {
   return (
     <>
@@ -41,7 +42,7 @@ function StudentListComponent({ students, count, handlePageClick }: { students: 
           </Link>
         ))}
       </div>
-      <Pagination count={count} handlePageClick={handlePageClick} itemsPerPage={itemsPerPage} />
+      <Pagination count={count} handlePageClick={handlePageClick} PAGE_SIZE={PAGE_SIZE} />
     </>
   );
 }
