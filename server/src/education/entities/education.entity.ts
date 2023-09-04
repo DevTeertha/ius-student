@@ -6,6 +6,7 @@ import {
   Entity,
   BeforeInsert,
   BeforeUpdate,
+  OneToOne,
 } from 'typeorm';
 
 import { Student } from 'src/student/entities/student.entity';
@@ -21,14 +22,8 @@ export class Education extends BaseEntity {
   @Column({ nullable: true })
   credits: number;
 
-  @Column()
-  instituteName: string;
-
   @Column({ type: 'enum', enum: EDegreeType, default: EDegreeType.BSC })
   degreeType: EDegreeType;
-
-  @Column()
-  degreeName: string;
 
   @Column()
   department: string;
@@ -42,13 +37,10 @@ export class Education extends BaseEntity {
   @Column({ nullable: true })
   graduationYear: number;
 
-  @Column({ default: false })
-  isCurrent: boolean;
-
-  @ManyToOne(() => Student, (student: Student) => student.id, {
+  @OneToOne(() => Student, (student: Student) => student.education, {
     onDelete: 'CASCADE',
   })
-  @JoinColumn({ name: 'student', referencedColumnName: 'id' })
+  @JoinColumn()
   student: Student | number;
 
   @BeforeInsert()

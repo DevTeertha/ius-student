@@ -38,7 +38,7 @@ export class StudentService {
     const findQuery = this.studentRepository
       .createQueryBuilder('student')
       .leftJoinAndSelect('student.experiences', 'experience')
-      .leftJoinAndSelect('student.educations', 'education');
+      .leftJoinAndSelect('student.education', 'education');
     if (offset) {
       findQuery.offset(offset);
     }
@@ -57,7 +57,7 @@ export class StudentService {
   async findOne(id: number): Promise<StudentDto> {
     return await this.studentRepository.findOne({
       where: { id },
-      relations: ['experiences', 'educations'],
+      relations: ['experiences', 'education'],
     });
   }
 

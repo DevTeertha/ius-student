@@ -18,22 +18,12 @@ export class CreateEducationDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ example: 'The International University Of Scholars' })
-  instituteName: string;
-
-  @IsString()
-  @IsNotEmpty()
   @ApiProperty({
     type: EDegreeType,
     default: EDegreeType.BSC,
     enum: EDegreeType,
   })
   degreeType: EDegreeType;
-
-  @IsString()
-  @IsNotEmpty()
-  @ApiProperty({ example: 'Bachelor of Science' })
-  degreeName: string;
 
   @IsString()
   @IsNotEmpty()
@@ -52,11 +42,6 @@ export class CreateEducationDto {
   @IsOptional()
   @ApiProperty({ example: 2024 })
   graduationYear: number;
-
-  @IsBoolean()
-  @IsOptional()
-  @ApiProperty({ example: true })
-  isCurrent: boolean;
 
   @ApiProperty({ type: Student, example: 1 })
   student: Student | number;

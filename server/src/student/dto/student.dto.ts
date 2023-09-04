@@ -6,6 +6,7 @@ import {
   EReligion,
   EStudentType,
 } from '../enum/student.enum';
+import { EducationDto } from 'src/education/dto/education.dto';
 
 export class StudentPaginationResponseDto {
   count: number;
@@ -141,7 +142,8 @@ export class StudentDto {
   @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
   motherPhone: string;
 
-  educations: any[];
+  @ApiProperty({ type: EducationDto, name: 'education' })
+  education: EducationDto;
 
   experiences: any[];
 }

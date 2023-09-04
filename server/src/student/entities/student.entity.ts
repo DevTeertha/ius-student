@@ -1,4 +1,11 @@
-import { BeforeInsert, BeforeUpdate, Column, Entity, OneToMany } from 'typeorm';
+import {
+  BeforeInsert,
+  BeforeUpdate,
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+} from 'typeorm';
 
 import { BaseEntity } from 'src/shared/entity/base.entity';
 import { Education } from 'src/education/entities/education.entity';
@@ -24,9 +31,6 @@ export class Student extends BaseEntity {
 
   @Column({ type: 'enum', enum: EStudentType, default: EStudentType.REGULAR })
   type: EStudentType;
-
-  @Column({ nullable: true })
-  batch: number;
 
   @Column({ type: 'enum', enum: EGender, default: EGender.MALE })
   gender: EGender;
@@ -80,10 +84,10 @@ export class Student extends BaseEntity {
   @Column({ nullable: true })
   motherPhone: string;
 
-  @OneToMany(() => Education, (education: Education) => education.student, {
+  @OneToOne(() => Education, (education: Education) => education.student, {
     cascade: ['insert'],
   })
-  educations: Education[];
+  education: Education;
 
   @OneToMany(() => Experience, (experience: Experience) => experience.student, {
     cascade: ['insert'],
