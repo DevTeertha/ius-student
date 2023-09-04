@@ -26,6 +26,7 @@ export class StudentService {
       throw new HttpException('Student id already exist', HttpStatus.FOUND);
     }
     return await this.studentRepository.save(student);
+    return;
   }
 
   async findAll({
