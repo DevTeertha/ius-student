@@ -13,10 +13,10 @@ function StudentListComponent({ students, count, handlePageClick }: { students: 
         {students?.map((student: IStudent, key: number) => (
           <Link to={`/students/${student.studentId}`} key={'student_list_' + key}>
             <Card>
-              <Card.Image src='https://daisyui.com/images/stock/photo-1606107557195-0e29a4b5b4aa.jpg' alt='Shoes' />
+              <Card.Image src='/default_avatar.webp' alt='Avatar' />
               <Card.Body className='p-4'>
                 <div className='flex justify-between'>
-                  <p className='font-bold text-xs badge badge-primary'>Batch: #{student?.batch}</p>
+                  <p className='font-bold text-xs badge badge-primary'>Batch: #{student?.education?.batch}</p>
                   <p className='font-bold text-end text-xs'>{student?.studentId}</p>
                 </div>
                 <Card.Title tag='h6' className='text-sm'>

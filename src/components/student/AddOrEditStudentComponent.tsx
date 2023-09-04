@@ -23,6 +23,7 @@ function AddOrEditStudentComponent() {
     control,
     formState: { errors },
   } = useForm<IStudent>();
+
   const {
     fields: experienceField,
     append: experienceAppend,
@@ -30,15 +31,6 @@ function AddOrEditStudentComponent() {
   } = useFieldArray({
     control,
     name: 'experiences',
-  });
-
-  const {
-    fields: educationField,
-    append: educationAppend,
-    remove: educationRemove,
-  } = useFieldArray({
-    control,
-    name: 'educations',
   });
 
   const { errorState, successState, messageState } = useContext<IToastContext>(ToastContext);
@@ -63,6 +55,7 @@ function AddOrEditStudentComponent() {
       setIsError(true);
     }
   };
+
   return (
     <>
       {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
@@ -73,8 +66,8 @@ function AddOrEditStudentComponent() {
           <h1 className='text-2xl font-bold'>Add / Edit Student</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <PersonalInformationFormComponent register={register} errors={errors} />
+            <EducationFormComponent register={register} errors={errors} />
             <ExperienceFormComponent fields={experienceField} append={experienceAppend} remove={experienceRemove} register={register} errors={errors} />
-            <EducationFormComponent fields={educationField} append={educationAppend} remove={educationRemove} register={register} errors={errors} />
             <div className='mt-3'>
               <button type='button' className='btn mr-3'>
                 <Link to={'/dashboard'}>Back</Link>

@@ -16,7 +16,7 @@ const ExperienceFormComponent = ({ fields, append, remove, register, errors }: I
   return (
     <div className='mt-6'>
       <div className='flex justify-between items-center py-3'>
-        <h5 className='text-xl font-bold'>Experience</h5>
+        <h5 className='text-xl font-bold'>Job Experience</h5>
         <button
           type='button'
           onClick={() =>

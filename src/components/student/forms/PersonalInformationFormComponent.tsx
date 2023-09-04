@@ -12,7 +12,7 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
   return (
     <div className='mt-6'>
       <h5 className='text-xl font-bold'>Personal Inforamtion</h5>
-      <div className='grid md:grid-cols-2 sm:grid-cols-1 gap-4'>
+      <div className='grid sm:grid-cols-1 gap-4'>
         <div>
           <label className='label'>
             <span className='text-base label-text'>Student ID*</span>
@@ -24,18 +24,6 @@ const PersonalInformationFormComponent = ({ register, errors }: IPersonalInforma
             className={`w-full input input-bordered input-light border-gray-500 ${errors.studentId && 'border-red-600'}`}
           />
           {errors.studentId && <span className='text-red-600'>Student ID is required</span>}
-        </div>
-        <div>
-          <label className='label'>
-            <span className='text-base label-text'>Batch (th)*</span>
-          </label>
-          <input
-            {...register('batch', { required: true })}
-            type='number'
-            placeholder='Example: 10'
-            className={`w-full input input-bordered input-light border-gray-500 ${errors.batch && 'border-red-600'}`}
-          />
-          {errors.batch && <span className='text-red-600'>Batch is required</span>}
         </div>
       </div>
       <div className='grid md:grid-cols-2 sm:grid-cols-1 gap-4'>

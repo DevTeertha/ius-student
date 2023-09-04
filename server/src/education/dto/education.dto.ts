@@ -11,20 +11,12 @@ export class EducationDto {
   credits: number;
 
   @IsOptional()
-  @ApiProperty({ example: 'The International University Of Scholars' })
-  instituteName: string;
-
-  @IsOptional()
   @ApiProperty({
     type: EDegreeType,
     default: EDegreeType.BSC,
     enum: EDegreeType,
   })
   degreeType: EDegreeType;
-
-  @IsOptional()
-  @ApiProperty({ example: 'Bachelor of Science' })
-  degreeName: string;
 
   @IsOptional()
   @ApiProperty({ example: 'Computer Science & Engineering' })
@@ -41,10 +33,6 @@ export class EducationDto {
   @IsOptional()
   @ApiProperty({ example: 2024 })
   graduationYear: number;
-
-  @IsOptional()
-  @ApiProperty({ example: true })
-  isCurrent: boolean;
 
   @IsOptional()
   @ApiProperty({ type: Student, example: Student })

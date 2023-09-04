@@ -5,7 +5,6 @@ export interface IStudentPaginationResponse {
 
 export interface IStudent {
   studentId: number;
-  batch: number;
   firstName: string;
   lastName: string;
   type: string;
@@ -24,7 +23,7 @@ export interface IStudent {
   motherName: string;
   motherPhone: string;
   experiences: IExperience[];
-  educations: IEducation[];
+  education: IEducation;
 }
 
 export interface IExperience {
@@ -40,12 +39,9 @@ export interface IExperience {
 
 export interface IEducation {
   credits?: number;
-  instituteName: string;
-  degreeType: string;
-  degreeName: string;
-  department: string;
   batch?: number;
+  degreeType: string;
+  department: string;
   seassonYear: number;
   graduationYear: number;
-  isCurrent: boolean;
 }

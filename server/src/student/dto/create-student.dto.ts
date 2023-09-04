@@ -19,11 +19,6 @@ export class CreateStudentDto {
 
   @IsString()
   @IsNotEmpty()
-  @ApiProperty({ example: '1', name: 'batch', required: true })
-  batch: number;
-
-  @IsString()
-  @IsNotEmpty()
   @ApiProperty({ example: 'Teertha Dev', name: 'firstName', required: true })
   firstName: string;
 
@@ -146,28 +141,8 @@ export class CreateStudentDto {
   @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
   motherPhone: string;
 
-  @IsOptional()
-  @ApiProperty({
-    type: [EducationDto],
-    example: [
-      {
-        credits: 140,
-        instituteName: 'The International University Of Scholars',
-        degreeType: 'BSC',
-        degreeName: 'Bachelor of Science',
-        department: 'Computer Science & Engineering',
-        batch: 10,
-        seassonYear: 2018,
-        graduationYear: 2024,
-        isCurrent: true,
-        student: 1,
-      },
-    ],
-    isArray: true,
-    name: 'educations',
-    required: true,
-  })
-  educations: EducationDto[];
+  @ApiProperty({ type: EducationDto, name: 'education' })
+  education: EducationDto;
 
   @IsOptional()
   @ApiProperty({
