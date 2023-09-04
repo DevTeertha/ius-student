@@ -13,10 +13,13 @@ import PersonalInformationFormComponent from './forms/PersonalInformationFormCom
 import ExperienceFormComponent from './forms/ExperienceFormComponent';
 import EducationFormComponent from './forms/EducationFormComponent';
 
-import { createStudent } from './studentService';
+import { createStudent, uploadImage } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
+import UploadPhotoComponent from './UploadPhotoComponent';
 
 function AddOrEditStudentComponent() {
+  const [file, setFile] = useState<string | null>(null);
+  const [imageURL, setImageURL] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
@@ -43,8 +46,15 @@ function AddOrEditStudentComponent() {
   const onSubmit = async (data: IStudent) => {
     try {
       setLoading(true);
-      const res = await createStudent(data);
-      setMessage(res?.message ?? 'Student added succesfully');
+
+      if (file) {
+        const fileResponse = await uploadImage(file);
+        const res = await createStudent({ ...data, imgUrl: fileResponse.data.url });
+        setMessage(res?.message ?? 'Student added succesfully');
+      } else {
+        const res = await createStudent(data);
+        setMessage(res?.message ?? 'Student added succesfully');
+      }
       setLoading(false);
       setIsSuccess(true);
       navigate('/dashboard');
@@ -65,6 +75,12 @@ function AddOrEditStudentComponent() {
         <div>
           <h1 className='text-2xl font-bold'>Add / Edit Student</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <UploadPhotoComponent
+              context={{
+                imageUrlState: [imageURL, setImageURL],
+                fileState: [file, setFile],
+              }}
+            />
             <PersonalInformationFormComponent register={register} errors={errors} />
             <EducationFormComponent register={register} errors={errors} />
             <ExperienceFormComponent fields={experienceField} append={experienceAppend} remove={experienceRemove} register={register} errors={errors} />

@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios';
 import axiosInstance from '../../shared/interceptor/authInterceptor';
 
 import { IHttpResponse } from '../../shared/interface/httpResponse.interface';
-import { IStudent, IStudentPaginationResponse } from './interface/student.interface';
+import { IFileUploadResponse, IStudent, IStudentPaginationResponse } from './interface/student.interface';
 
 const apiEndPoint = 'http://localhost:8081/api';
 
@@ -22,6 +22,17 @@ export const getStudents = async (key: QueryFunctionContext): Promise<IHttpRespo
     const params = key?.queryKey?.[1] ?? {};
     const loginResponse: AxiosResponse<IHttpResponse<IStudentPaginationResponse>> = await axiosInstance.get(`${apiEndPoint}/students`, { params: { ...params } });
     return loginResponse.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const uploadImage = async (file: any): Promise<IHttpResponse<IFileUploadResponse>> => {
+  try {
+    const fileFormData = new FormData();
+    fileFormData.append('file', file);
+    const fileReponse: AxiosResponse<IHttpResponse<IFileUploadResponse>> = await axiosInstance.post(`${apiEndPoint}/media`, fileFormData);
+    return fileReponse.data;
   } catch (error) {
     throw error;
   }

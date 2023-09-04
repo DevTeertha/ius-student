@@ -45,3 +45,8 @@ export interface IEducation {
   seassonYear: number;
   graduationYear: number;
 }
+
+export interface IFileUploadResponse {
+  key: string;
+  url: string;
+}

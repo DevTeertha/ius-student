@@ -13,7 +13,7 @@ function StudentListComponent({ students, count, handlePageClick }: { students: 
         {students?.map((student: IStudent, key: number) => (
           <Link to={`/students/${student.studentId}`} key={'student_list_' + key}>
             <Card>
-              <Card.Image src='/default_avatar.webp' alt='Avatar' />
+              <Card.Image className='w-[228px] h-[228px]' src={student?.imgUrl ? student.imgUrl : '/default_avatar.webp'} alt='Avatar' />
               <Card.Body className='p-4'>
                 <div className='flex justify-between'>
                   {student?.education?.batch && <p className='font-bold text-xs badge badge-primary'>Batch: #{student.education.batch}</p>}
