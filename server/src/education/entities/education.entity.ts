@@ -1,21 +1,17 @@
 import {
   PrimaryGeneratedColumn,
   Column,
-  ManyToOne,
   JoinColumn,
   Entity,
-  BeforeInsert,
-  BeforeUpdate,
   OneToOne,
 } from 'typeorm';
 
 import { Student } from 'src/student/entities/student.entity';
-import { BaseEntity } from 'src/shared/entity/base.entity';
 
 import { EDegreeType } from '../enum/education.enum';
 
 @Entity('educations')
-export class Education extends BaseEntity {
+export class Education {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -42,14 +38,4 @@ export class Education extends BaseEntity {
   })
   @JoinColumn()
   student: Student | number;
-
-  @BeforeInsert()
-  insertDate() {
-    this.createdAt = new Date().toUTCString();
-  }
-
-  @BeforeUpdate()
-  updateDate() {
-    this.updatedAt = new Date().toUTCString();
-  }
 }

@@ -8,8 +8,8 @@ import {
   EReligion,
 } from '../enum/student.enum';
 
-import { EducationDto } from 'src/education/dto/education.dto';
 import { ExperienceDto } from 'src/experience/dto/experience.dto';
+import { CreateEducationDto } from 'src/education/dto/create-education.dto';
 
 export class CreateStudentDto {
   @IsString()
@@ -141,8 +141,9 @@ export class CreateStudentDto {
   @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
   motherPhone: string;
 
-  @ApiProperty({ type: EducationDto, name: 'education' })
-  education: EducationDto;
+  @IsNotEmpty()
+  @ApiProperty({ type: CreateEducationDto, name: 'education' })
+  education: CreateEducationDto;
 
   @IsOptional()
   @ApiProperty({

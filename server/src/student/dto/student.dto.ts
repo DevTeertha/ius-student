@@ -1,12 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsNumber, IsString } from 'class-validator';
+
 import {
   EGender,
   EMaritalStatus,
   EReligion,
   EStudentType,
 } from '../enum/student.enum';
-import { EducationDto } from 'src/education/dto/education.dto';
+
+import { CreateEducationDto } from 'src/education/dto/create-education.dto';
 
 export class StudentPaginationResponseDto {
   count: number;
@@ -142,8 +144,9 @@ export class StudentDto {
   @ApiProperty({ example: '123456789789', name: 'motherPhone', required: true })
   motherPhone: string;
 
-  @ApiProperty({ type: EducationDto, name: 'education' })
-  education: EducationDto;
+  @IsNotEmpty()
+  @ApiProperty({ type: CreateEducationDto, name: 'education' })
+  education: CreateEducationDto;
 
   experiences: any[];
 }

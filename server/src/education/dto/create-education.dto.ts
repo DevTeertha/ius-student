@@ -42,7 +42,4 @@ export class CreateEducationDto {
   @IsOptional()
   @ApiProperty({ example: 2024 })
   graduationYear: number;
-
-  @ApiProperty({ type: Student, example: 1 })
-  student: Student | number;
 }
