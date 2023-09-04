@@ -23,6 +23,7 @@ function StudentListComponent({ students, count, handlePageClick }: { students: 
                 <Card.Title tag='h6' className='text-sm'>
                   {student?.firstName + ' ' + student?.lastName}
                 </Card.Title>
+                <div>{student?.education?.department && <p className='text-xs font-semibold'>{student.education.department}</p>}</div>
                 <div>
                   {student?.email && (
                     <p className='text-xs'>
