@@ -45,13 +45,13 @@ export class StudentService {
 
     if (searchText) {
       findQuery.where((qb) => {
-        qb.where('student.firstName LIKE :searchText', {
-          searchText: `%${searchText}%`,
-        })
-          .orWhere('student.lastName LIKE :searchText', {
+        qb.where(
+          'CONCAT(student.firstName, " ", student.lastName) LIKE :searchText',
+          {
             searchText: `%${searchText}%`,
-          })
-          .orWhere('student.studentId = :searchText', { searchText })
+          },
+        )
+          .orWhere('student.studentId LIKE :searchText', { searchText })
           .orWhere('student.email LIKE :searchText', {
             searchText: `%${searchText}%`,
           })
