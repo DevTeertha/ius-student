@@ -1,7 +1,9 @@
+import { useParams } from 'react-router-dom';
 import AddOrEditStudentComponent from '../../components/student/AddOrEditStudentComponent';
 
 function AddStudent() {
-  return <AddOrEditStudentComponent />;
+  const { studentId } = useParams();
+  return <AddOrEditStudentComponent studentId={studentId ?? null} />;
 }
 
 export default AddStudent;

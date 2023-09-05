@@ -7,7 +7,17 @@ import { IStudent } from './interface/student.interface';
 
 import Pagination from '../../shared/components/toast/Pagination';
 
-function StudentListComponent({ students, count, handlePageClick }: { students: IStudent[]; count: number; handlePageClick: (event: any) => void }) {
+function StudentListComponent({
+  students,
+  count,
+  handlePageClick,
+  showAdminActionButton,
+}: {
+  students: IStudent[];
+  count: number;
+  handlePageClick: (event: any) => void;
+  showAdminActionButton: boolean;
+}) {
   return (
     <>
       <div className='grid grid-flow-row lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1'>
@@ -40,6 +50,16 @@ function StudentListComponent({ students, count, handlePageClick }: { students: 
                     )}
                   </div>
                 </Card.Body>
+                {showAdminActionButton && (
+                  <div className='card-actions justify-end'>
+                    <Link to={`/students/edit/${student.studentId}`}>
+                      <button type='button' className='btn btn-outline btn-neutral'>
+                        Edit
+                      </button>
+                    </Link>
+                    <button className='btn btn-error'>Delete</button>
+                  </div>
+                )}
               </Card>
             </Link>
           ))
