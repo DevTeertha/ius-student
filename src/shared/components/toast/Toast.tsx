@@ -17,7 +17,7 @@ function Toast({ message, state, status = 'success' }: IToastProps) {
 
   return (
     isTrigger && (
-      <div className='toast toast-center'>
+      <div className='toast toast-center z-10'>
         <Alert status={status} icon={GetIcon(status)}>
           <div>
             <span>{message}</span>
