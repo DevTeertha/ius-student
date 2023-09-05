@@ -15,7 +15,7 @@ import { MediaModule } from './media/media.module';
       host: 'localhost',
       port: 3306,
       username: 'root',
-      password: '',
+      password: 'admin',
       database: 'ius_student',
       entities: [],
       autoLoadEntities: true,
