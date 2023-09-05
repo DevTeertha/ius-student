@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -8,16 +8,16 @@ import { IStudent } from './interface/student.interface';
 import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
 
 import NavbarComponent from '../navbar/NavbarComponent';
-
-import PersonalInformationFormComponent from './forms/PersonalInformationFormComponent';
-import ExperienceFormComponent from './forms/ExperienceFormComponent';
+import UploadPhotoComponent from './UploadPhotoComponent';
 import EducationFormComponent from './forms/EducationFormComponent';
+import ExperienceFormComponent from './forms/ExperienceFormComponent';
+import PersonalInformationFormComponent from './forms/PersonalInformationFormComponent';
 
 import { createStudent, uploadImage } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
-import UploadPhotoComponent from './UploadPhotoComponent';
 
-function AddOrEditStudentComponent() {
+function AddOrEditStudentComponent({ studentId = null }: { studentId: string | null }) {
+  console.log('studentId: ', studentId);
   const [file, setFile] = useState<string | null>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
   const {
@@ -65,6 +65,8 @@ function AddOrEditStudentComponent() {
       setIsError(true);
     }
   };
+
+  useEffect(() => {}, []);
 
   return (
     <>

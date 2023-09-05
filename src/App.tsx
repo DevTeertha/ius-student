@@ -31,7 +31,12 @@ const router = createBrowserRouter([
     loader: authGuard,
   },
   {
-    path: '/dashboard/add-student',
+    path: '/students/add',
+    element: <AddStudent />,
+    loader: authGuard,
+  },
+  {
+    path: '/students/edit/:studentId',
     element: <AddStudent />,
     loader: authGuard,
   },

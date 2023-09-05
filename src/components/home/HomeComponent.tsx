@@ -8,14 +8,13 @@ import TransparentSpinner from '../../shared/components/spinner/TransparentSpinn
 
 export const PAGE_SIZE = 8;
 
-function HomeComponent({ children, showAddButton = false }: any) {
+function HomeComponent({ children, showAdminActionButton = false }: any) {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const queryClient = useQueryClient();
   const { data, isLoading } = useQuery(['getStudents', { limit: PAGE_SIZE, offset: (currentPage - 1) * PAGE_SIZE, searchText }], getStudents);
 
   const handleSearch = () => {
-    console.log('searchText: ', searchText);
     queryClient.invalidateQueries(['getStudents', { limit: PAGE_SIZE, offset: (currentPage - 1) * PAGE_SIZE, searchText }]);
   };
 
@@ -29,7 +28,7 @@ function HomeComponent({ children, showAddButton = false }: any) {
     <>
       {isLoading && <TransparentSpinner />}
       <div className='grid grid-flow-row-dense grid-cols-5 my-5'>
-        <div className={showAddButton ? 'col-span-4' : 'col-span-5'}>
+        <div className={showAdminActionButton ? 'col-span-4' : 'col-span-5'}>
           <div className='text-center'>
             <div className='flex justify-center items-center'>
               <input
@@ -48,7 +47,7 @@ function HomeComponent({ children, showAddButton = false }: any) {
         </div>
         {children}
       </div>
-      <StudentListComponent handlePageClick={handlePageClick} count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
+      <StudentListComponent showAdminActionButton={showAdminActionButton} handlePageClick={handlePageClick} count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
     </>
   );
 }
