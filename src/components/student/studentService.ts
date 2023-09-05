@@ -20,8 +20,17 @@ export const createStudent = async (payload: IStudent): Promise<IHttpResponse<IS
 export const getStudents = async (key: QueryFunctionContext): Promise<IHttpResponse<IStudentPaginationResponse>> => {
   try {
     const params = key?.queryKey?.[1] ?? {};
-    const loginResponse: AxiosResponse<IHttpResponse<IStudentPaginationResponse>> = await axiosInstance.get(`${apiEndPoint}/students`, { params: { ...params } });
-    return loginResponse.data;
+    const studentResponse: AxiosResponse<IHttpResponse<IStudentPaginationResponse>> = await axiosInstance.get(`${apiEndPoint}/students`, { params: { ...params } });
+    return studentResponse.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getOneStudent = async (studentId?: string): Promise<IHttpResponse<IStudent>> => {
+  try {
+    const studentResponse: AxiosResponse<IHttpResponse<IStudent>> = await axiosInstance.get(`${apiEndPoint}/students/${studentId}`);
+    return studentResponse.data;
   } catch (error) {
     throw error;
   }

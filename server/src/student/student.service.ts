@@ -81,7 +81,7 @@ export class StudentService {
 
   async findOne(id: number): Promise<StudentDto> {
     return await this.studentRepository.findOne({
-      where: { id },
+      where: [{ studentId: id }, { id }],
       relations: ['experiences', 'education'],
     });
   }

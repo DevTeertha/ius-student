@@ -10,12 +10,12 @@ import Pagination from '../../shared/components/toast/Pagination';
 function StudentListComponent({ students, count, handlePageClick }: { students: IStudent[]; count: number; handlePageClick: (event: any) => void }) {
   return (
     <>
-      <div className='grid grid-flow-row lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-1'>
+      <div className='grid grid-flow-row lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1'>
         {students.length ? (
           students?.map((student: IStudent, key: number) => (
             <Link to={`/students/${student.studentId}`} key={'student_list_' + key}>
               <Card>
-                <Card.Image className='w-[228px] h-[228px]' src={student?.imgUrl ? student.imgUrl : '/default_avatar.webp'} alt='Avatar' />
+                <Card.Image className='w-full h-[228px]' src={student?.imgUrl ?? '/default_avatar.webp'} alt='Avatar' />
                 <Card.Body className='p-4'>
                   <div className='flex justify-between'>
                     {student?.education?.batch && <p className='font-bold text-xs badge badge-primary'>Batch: #{student.education.batch}</p>}

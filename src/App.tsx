@@ -14,11 +14,16 @@ import { authGuard, notAuthGuard } from './shared/guard/auth/authGuard';
 import Toast, { ToastContext } from './shared/components/toast/Toast';
 
 import { EToastStatusType } from './shared/interface/toast.interface';
+import StudentProfileComponent from './components/student/StudentProfileComponent';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Home />,
+  },
+  {
+    path: '/students/:studentId',
+    element: <StudentProfileComponent />,
   },
   {
     path: '/dashboard',
