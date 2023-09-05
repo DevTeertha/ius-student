@@ -65,13 +65,30 @@ export class StudentController {
     type: Number,
     description: 'Page Limit',
   })
+  @ApiQuery({
+    name: 'searchText',
+    required: false,
+    type: String,
+    description:
+      'Search by student name, department, student ID, email, phone no',
+  })
   async findAll(
-    @Query() { offset, limit }: { offset: number; limit: number },
+    @Query()
+    {
+      offset,
+      limit,
+      searchText,
+    }: {
+      offset: number;
+      limit: number;
+      searchText: string;
+    },
   ): Promise<ResponseDTO<StudentPaginationResponseDto>> {
     try {
       const { count, students } = await this.studentService.findAll({
         offset,
         limit,
+        searchText,
       });
       return this.utilService.successReponse(
         { count, students },

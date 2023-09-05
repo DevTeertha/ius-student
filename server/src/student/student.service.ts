@@ -15,6 +15,7 @@ export class StudentService {
     @InjectRepository(Student)
     private studentRepository: Repository<Student>,
   ) {}
+
   async create(createStudentDto: CreateStudentDto): Promise<StudentDto> {
     const student = plainToClass(Student, createStudentDto);
     const existingStudent = await this.findByFields({
@@ -26,20 +27,43 @@ export class StudentService {
       throw new HttpException('Student id already exist', HttpStatus.FOUND);
     }
     return await this.studentRepository.save(student);
-    return;
   }
 
   async findAll({
     offset,
     limit,
+    searchText,
   }: {
     offset: number;
     limit: number;
+    searchText: string;
   }): Promise<StudentPaginationResponseDto> {
     const findQuery = this.studentRepository
       .createQueryBuilder('student')
       .leftJoinAndSelect('student.experiences', 'experience')
       .leftJoinAndSelect('student.education', 'education');
+
+    if (searchText) {
+      findQuery.where((qb) => {
+        qb.where('student.firstName LIKE :searchText', {
+          searchText: `%${searchText}%`,
+        })
+          .orWhere('student.lastName LIKE :searchText', {
+            searchText: `%${searchText}%`,
+          })
+          .orWhere('student.studentId = :searchText', { searchText })
+          .orWhere('student.email LIKE :searchText', {
+            searchText: `%${searchText}%`,
+          })
+          .orWhere('student.phone LIKE :searchText', {
+            searchText: `%${searchText}%`,
+          })
+          .orWhere('education.department LIKE :searchText', {
+            searchText: `%${searchText}%`,
+          });
+      });
+    }
+
     if (offset) {
       findQuery.offset(offset);
     }
