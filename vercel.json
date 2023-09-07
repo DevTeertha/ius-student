@@ -1,7 +1,8 @@
 {
   "headers": [
     {
-      "source": "https://ius-student-backend.vercel.app/api/*",
+      "source": "*",
+      "destination": "https://ius-student-backend.vercel.app/api/(.*)",
       "headers": [
         { "key": "Access-Control-Allow-Credentials", "value": "true" },
         { "key": "Access-Control-Allow-Origin", "value": "*" },
