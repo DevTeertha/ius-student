@@ -6,7 +6,7 @@ import axiosInstance from '../../shared/interceptor/authInterceptor';
 import { IHttpResponse } from '../../shared/interface/httpResponse.interface';
 import { IFileUploadResponse, IStudent, IStudentPaginationResponse } from './interface/student.interface';
 
-const apiEndPoint = 'http://localhost:8081/api';
+const apiEndPoint = 'https://ius-student-backend.vercel.app/api';
 
 export const createStudent = async (payload: IStudent): Promise<IHttpResponse<IStudent>> => {
   try {
