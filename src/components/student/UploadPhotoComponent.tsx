@@ -18,7 +18,7 @@ export interface IFile {
 const UploadPhotoComponent = ({ context }: { context: IUploadPhotoProps }) => {
   const { imageUrlState, fileState } = context;
   const [imageURL, setImageURL] = imageUrlState;
-  const [file, setFile] = fileState;
+  const setFile = fileState[1];
 
   const fileChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     const fileTarget = e.target.files?.[0];
