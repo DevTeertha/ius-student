@@ -6,7 +6,7 @@ import { IExperience } from './interface/student.interface';
 
 function StudentProfileComponent() {
   let { studentId } = useParams();
-  const { data, isLoading } = useQuery(['getOneStudent', studentId], () => getOneStudent(studentId));
+  const { data } = useQuery(['getOneStudent', studentId], () => getOneStudent(studentId));
   const student = data?.data;
 
   return (
