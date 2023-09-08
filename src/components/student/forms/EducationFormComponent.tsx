@@ -68,7 +68,7 @@ const EducationFormComponent = ({ register, errors }: IEducationUseFormProps) =>
           <input
             {...register(`education.seassonYear`, { required: true })}
             type='number'
-            placeholder='Enter Institute Name'
+            placeholder='Enter Session Year'
             className={`w-full input input-bordered input-light border-gray-500 ${errors?.education?.seassonYear && 'border-red-600'}`}
           />
           {errors?.education?.seassonYear && <span className='text-red-600'>Session year is required</span>}
@@ -80,7 +80,7 @@ const EducationFormComponent = ({ register, errors }: IEducationUseFormProps) =>
           <input
             {...register(`education.graduationYear`, { required: true })}
             type='number'
-            placeholder='Enter Institute Name'
+            placeholder='Enter Graduation Year'
             className={`w-full input input-bordered input-light border-gray-500 ${errors?.education?.graduationYear && 'border-red-600'}`}
           />
           {errors?.education?.graduationYear && <span className='text-red-600'>Graduation year is required</span>}

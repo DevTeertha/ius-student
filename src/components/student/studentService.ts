@@ -1,12 +1,12 @@
 import { QueryFunctionContext } from 'react-query';
 import { AxiosResponse } from 'axios';
 
-import axiosInstance from '../../shared/interceptor/authInterceptor';
+import { axiosInstance } from '../../shared/interceptor';
 
 import { IHttpResponse } from '../../shared/interface/httpResponse.interface';
 import { IFileUploadResponse, IStudent, IStudentPaginationResponse } from './interface/student.interface';
 
-const apiEndPoint = 'https://ius-student-backend.vercel.app/api';
+const apiEndPoint = 'http://localhost:8081/api';
 
 export const createStudent = async (payload: IStudent): Promise<IHttpResponse<IStudent>> => {
   try {
@@ -27,7 +27,7 @@ export const getStudents = async (key: QueryFunctionContext): Promise<IHttpRespo
   }
 };
 
-export const getOneStudent = async (studentId?: string): Promise<IHttpResponse<IStudent>> => {
+export const getOneStudent = async (studentId: string): Promise<IHttpResponse<IStudent>> => {
   try {
     const studentResponse: AxiosResponse<IHttpResponse<IStudent>> = await axiosInstance.get(`${apiEndPoint}/students/${studentId}`);
     return studentResponse.data;

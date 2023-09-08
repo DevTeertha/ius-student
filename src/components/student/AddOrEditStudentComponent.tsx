@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom';
 
 import Toast, { ToastContext } from '../../shared/components/toast/Toast';
 
-import { IStudent } from './interface/student.interface';
+import { IExperience, IStudent } from './interface/student.interface';
 import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
 
 import NavbarComponent from '../navbar/NavbarComponent';
@@ -13,17 +13,17 @@ import EducationFormComponent from './forms/EducationFormComponent';
 import ExperienceFormComponent from './forms/ExperienceFormComponent';
 import PersonalInformationFormComponent from './forms/PersonalInformationFormComponent';
 
-import { createStudent, uploadImage } from './studentService';
+import { createStudent, getOneStudent, uploadImage } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
 
 function AddOrEditStudentComponent({ studentId = null }: { studentId: string | null }) {
-  console.log('studentId: ', studentId);
   const [file, setFile] = useState<string | null>(null);
   const [imageURL, setImageURL] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     control,
+    setValue,
     formState: { errors },
   } = useForm<IStudent>();
 
@@ -66,7 +66,40 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
     }
   };
 
-  useEffect(() => {}, []);
+  const findOneStudent = async () => {
+    if (studentId) {
+      const studentResponse = await getOneStudent(studentId);
+      updateForm(studentResponse.data);
+    }
+  };
+
+  const updateForm = (student: IStudent) =>{
+    Object.entries(student).map(([key, value]: [any, any])=>{
+      if(key !== 'experiences' && key !== 'education'){
+        
+        setValue(key, value);
+      }
+      if(key === 'education'){
+        Object.entries(student.education).map(([eduKey, eduValue]: [any, any])=>{
+          const edKey: any = `education.${eduKey}`;
+          setValue(edKey, eduValue)
+        })
+      }
+
+      if(key === 'experiences'){
+        student?.experiences?.map((experience: IExperience, index: number)=>{
+          Object.entries(experience).map(([exKey, exValue]: [any, any])=>{
+            const exNewKey: any = `experiences[${index}].${exKey}`;
+            setValue(exNewKey, exValue);
+          })
+        })
+      }
+    })
+  }
+
+  useEffect(() => {
+    findOneStudent();
+  }, []);
 
   return (
     <>
