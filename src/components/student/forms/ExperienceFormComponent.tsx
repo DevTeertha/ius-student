@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { FieldArrayWithId, UseFieldArrayAppend, UseFieldArrayRemove } from 'react-hook-form';
 import dayjs from 'dayjs';
 
@@ -14,10 +13,6 @@ export interface IExperienceUseFormProps extends IPersonalInformationUseFormProp
 }
 
 const ExperienceFormComponent = ({ fields, append, remove, register, errors }: IExperienceUseFormProps) => {
-  useEffect(()=>{
-    console.log('fields: ', fields);
-    // append({ companyName: '', jobType: EJobType.FULL_TIME, address: '', country: '', designation: '', startFrom: dayjs().format('YYYY-MM-DD'), endFrom: '', isCurrentEmployee: true });
-  },[])
   return (
     <div className='mt-6'>
       <div className='flex justify-between items-center py-3'>
