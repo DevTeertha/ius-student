@@ -3,6 +3,8 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "proxy": "https://ius-student-backend.vercel.app",
+  "homepage": "http://localhost:5173",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
@@ -13,6 +15,7 @@
     "@heroicons/react": "^2.0.18",
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
+    "http-proxy-middleware": "^2.0.6",
     "react": "^18.2.0",
     "react-daisyui": "^4.0.0",
     "react-dom": "^18.2.0",

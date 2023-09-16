@@ -1,10 +1,13 @@
-import { memo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
 
 import StudentListComponent from '../student/StudentListComponent';
+import TransparentSpinner from '../../shared/components/spinner/TransparentSpinner';
 
 import { getStudents } from '../student/studentService';
-import TransparentSpinner from '../../shared/components/spinner/TransparentSpinner';
+import { getToken } from '../../shared/service/storageService';
+
+import axiosInstance from '../../shared/interceptor';
 
 export const PAGE_SIZE = 8;
 
@@ -23,6 +26,26 @@ function HomeComponent({ children, showAdminActionButton = false }: any) {
     setCurrentPage(newPage);
     queryClient.invalidateQueries(['getStudents', { limit: PAGE_SIZE, offset: (newPage - 1) * PAGE_SIZE, searchText }]);
   };
+
+  useEffect(() => {
+    console.log('getToken(): ', getToken());
+    // const headers: AxiosHeaders = {
+
+    // }
+    axiosInstance
+      .get('/api/students?limit=8&offset=0&searchText=', {
+        headers: {
+          Authorization: `Bearer ${getToken()}`,
+          Accept: 'application/json',
+        },
+      })
+      .then((res) => {
+        console.log('axios with header: ', res.data);
+      })
+      .catch((err) => {
+        console.log('axios err: ', err);
+      });
+  }, []);
 
   return (
     <>
