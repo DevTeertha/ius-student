@@ -3,8 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "proxy": "https://ius-student-backend.vercel.app",
-  "homepage": "http://localhost:5173",
+  "proxy": "https://ius-student-backend.vercel.app/",
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build",
