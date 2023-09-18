@@ -13,7 +13,7 @@ import EducationFormComponent from './forms/EducationFormComponent';
 import ExperienceFormComponent from './forms/ExperienceFormComponent';
 import PersonalInformationFormComponent from './forms/PersonalInformationFormComponent';
 
-import { createStudent, getOneStudent, uploadImage } from './studentService';
+import { createStudent, getOneStudent, updateStudent, uploadImage } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
 
 function AddOrEditStudentComponent({ studentId = null }: { studentId: string | null }) {
@@ -43,17 +43,24 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
   const [message, setMessage] = messageState;
   const navigate = useNavigate();
 
+  const addOrEdit = async (data: IStudent) =>{
+    if(studentId){
+      const res = await updateStudent(Number(studentId), data)
+      setMessage(res?.message ?? 'Student updated succesfully');
+    }else{
+      const res = await createStudent(data);
+      setMessage(res?.message ?? 'Student added succesfully');
+    }
+  }
+
   const onSubmit = async (data: IStudent) => {
     try {
       setLoading(true);
-
       if (file) {
         const fileResponse = await uploadImage(file);
-        const res = await createStudent({ ...data, imgUrl: fileResponse.data.url });
-        setMessage(res?.message ?? 'Student added succesfully');
+        await addOrEdit({ ...data, imgUrl: fileResponse.data.url })
       } else {
-        const res = await createStudent(data);
-        setMessage(res?.message ?? 'Student added succesfully');
+        await addOrEdit(data);
       }
       setLoading(false);
       setIsSuccess(true);
@@ -74,6 +81,7 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
   };
 
   const updateForm = (student: IStudent) =>{
+    setImageURL(student?.imgUrl ?? null)
     Object.entries(student).map(([key, value]: [any, any])=>{
       if(key !== 'experiences' && key !== 'education'){
         
