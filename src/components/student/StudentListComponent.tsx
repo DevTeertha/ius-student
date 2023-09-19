@@ -1,12 +1,18 @@
-import { useRef, useCallback } from 'react';
+import { useRef, useCallback, useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, Card, Modal } from 'react-daisyui';
+import { useQueryClient } from 'react-query';
 
 import { PAGE_SIZE } from '../home/HomeComponent';
 
-import { IStudent } from './interface/student.interface';
-
 import Pagination from '../../shared/components/toast/Pagination';
+import Toast, { ToastContext } from '../../shared/components/toast/Toast';
+
+import { IStudent } from './interface/student.interface';
+import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
+
+import { deleteStudent } from './studentService';
+import { getErrorResponse } from '../../shared/service/utilService';
 
 function StudentListComponent({
   students,
@@ -19,13 +25,53 @@ function StudentListComponent({
   handlePageClick: (event: any) => void;
   showAdminActionButton: boolean;
 }) {
+  const { errorState, successState, messageState } = useContext<IToastContext>(ToastContext);
+  const queryClient = useQueryClient();
+  const [deletableId, setDeletableId] = useState<number | null>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isError, setIsError] = errorState;
+  const [isSuccess, setIsSuccess] = successState;
+  const [message, setMessage] = messageState;
+
   const ref = useRef<HTMLDialogElement>(null);
-  const handleShow = useCallback(() => {
-    ref.current?.showModal();
-  }, [ref]);
+
+  const handleDeleteStudent = async () => {
+    if (deletableId) {
+      try {
+        setLoading(true);
+        const deleteResponse = await deleteStudent(deletableId);
+        setMessage(deleteResponse?.message ?? 'Student deleted succesfully');
+        setLoading(false);
+        setIsSuccess(true);
+        handleClose();
+        queryClient.invalidateQueries(['getStudents', { limit: PAGE_SIZE, offset: 0 }]);
+      } catch (error) {
+        const errorResponse = getErrorResponse(error);
+        setMessage(errorResponse.message);
+        setLoading(false);
+        setIsError(true);
+      }
+    }
+  };
+
+  const handleShow = useCallback(
+    (id: number) => {
+      ref.current?.showModal();
+      setDeletableId(() => id);
+    },
+    [ref]
+  );
+
+  const handleClose = () => {
+    ref.current?.close();
+    setDeletableId(() => null);
+  };
+
   return (
     <>
-      <div className='grid grid-flow-row lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1'>
+      {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
+      {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
+      <div className='grid grid-flow-row xl:grid-cols-5 lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1'>
         {students.length ? (
           students?.map((student: IStudent, key: number) => (
             <div key={'student_list_' + key}>
@@ -68,11 +114,11 @@ function StudentListComponent({
                       onClick={(e) => {
                         e.preventDefault();
                         e.stopPropagation();
-                        return handleShow();
+                        return handleShow(Number(student.studentId));
                       }}
                       type='button'
                       className='btn btn-error'>
-                      Delete
+                      {loading && <span className='loading loading-ring loading-lg'></span>} Delete
                     </button>
                   </div>
                 )}
@@ -84,11 +130,13 @@ function StudentListComponent({
         )}
       </div>
       <Modal ref={ref}>
-        <Modal.Header className='font-bold'>Hello!</Modal.Header>
-        <Modal.Body>Press ESC key or click the button below to close</Modal.Body>
+        <Modal.Header className='font-bold'>Delete</Modal.Header>
+        <Modal.Body>Are you sure? you want to delete this student? id = {deletableId}</Modal.Body>
         <Modal.Actions>
-          <Button className='btn btn-primary'>Save</Button>
-          <Button>Close</Button>
+          <Button onClick={handleClose}>Cancel</Button>
+          <Button disabled={loading} onClick={handleDeleteStudent} className='btn btn-error'>
+            Delete
+          </Button>
         </Modal.Actions>
       </Modal>
       <Pagination count={count} handlePageClick={handlePageClick} PAGE_SIZE={PAGE_SIZE} />

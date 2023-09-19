@@ -1,16 +1,18 @@
 import { useQuery } from 'react-query';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { getOneStudent } from './studentService';
 import { IExperience } from './interface/student.interface';
+import TransparentSpinner from '../../shared/components/spinner/TransparentSpinner';
 
 function StudentProfileComponent() {
   let { studentId } = useParams();
-  const { data } = useQuery(['getOneStudent', studentId], () => getOneStudent(studentId));
+  const { data, isLoading } = useQuery(['getOneStudent', studentId], () => getOneStudent(studentId));
   const student = data?.data;
 
   return (
-    <div className='block md:grid md:grid-cols-3'>
+    <div className='block md:grid md:grid-cols-4'>
+      {isLoading && <TransparentSpinner />}
       <div className='md:bg-gray-600 md:h-screen md:overflow-y-auto p-4'>
         <div>
           <div>
@@ -91,9 +93,12 @@ function StudentProfileComponent() {
               </div>
             </div>
           </div>
+          <Link to={'/'}>
+            <button className='btn btn-light w-full'>Back</button>
+          </Link>
         </div>
       </div>
-      <div className='md:col-span-2 md:overflow-y-auto md:h-screen'>
+      <div className='md:col-span-3 md:overflow-y-auto md:h-screen'>
         <div className='p-4'>
           <div>
             <h2 className='font-bold text-2xl'>Address</h2>

@@ -40,7 +40,12 @@ const EducationFormComponent = ({ register, errors }: IEducationUseFormProps) =>
           <label className='label'>
             <span className='text-base label-text'>Degree Type</span>
           </label>
-          <select {...register(`education.degreeType`)} className={`w-full input input-bordered input-light border-gray-500`} name='degreeType'>
+          <select
+            defaultValue={EDegreeType.BSC}
+            {...register(`education.degreeType`, { required: true })}
+            className={`w-full input input-bordered input-light border-gray-500`}
+            name='degreeType'
+            id='degreeType'>
             <option value={EDegreeType.BBA}>BBA</option>
             <option value={EDegreeType.BSC}>BSC</option>
             <option value={EDegreeType.MBA}>MBA</option>

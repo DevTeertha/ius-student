@@ -43,22 +43,22 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
   const [message, setMessage] = messageState;
   const navigate = useNavigate();
 
-  const addOrEdit = async (data: IStudent) =>{
-    if(studentId){
-      const res = await updateStudent(Number(studentId), data)
+  const addOrEdit = async (data: IStudent) => {
+    if (studentId) {
+      const res = await updateStudent(Number(studentId), data);
       setMessage(res?.message ?? 'Student updated succesfully');
-    }else{
+    } else {
       const res = await createStudent(data);
       setMessage(res?.message ?? 'Student added succesfully');
     }
-  }
+  };
 
   const onSubmit = async (data: IStudent) => {
     try {
       setLoading(true);
       if (file) {
         const fileResponse = await uploadImage(file);
-        await addOrEdit({ ...data, imgUrl: fileResponse.data.url })
+        await addOrEdit({ ...data, imgUrl: fileResponse.data.url });
       } else {
         await addOrEdit(data);
       }
@@ -80,30 +80,29 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
     }
   };
 
-  const updateForm = (student: IStudent) =>{
-    setImageURL(student?.imgUrl ?? null)
-    Object.entries(student).map(([key, value]: [any, any])=>{
-      if(key !== 'experiences' && key !== 'education'){
-        
+  const updateForm = (student: IStudent) => {
+    setImageURL(student?.imgUrl ?? null);
+    Object.entries(student).map(([key, value]: [any, any]) => {
+      if (key !== 'experiences' && key !== 'education') {
         setValue(key, value);
       }
-      if(key === 'education'){
-        Object.entries(student.education).map(([eduKey, eduValue]: [any, any])=>{
+      if (key === 'education') {
+        Object.entries(student.education).map(([eduKey, eduValue]: [any, any]) => {
           const edKey: any = `education.${eduKey}`;
-          setValue(edKey, eduValue)
-        })
+          setValue(edKey, eduValue);
+        });
       }
 
-      if(key === 'experiences'){
-        student?.experiences?.map((experience: IExperience, index: number)=>{
-          Object.entries(experience).map(([exKey, exValue]: [any, any])=>{
+      if (key === 'experiences') {
+        student?.experiences?.map((experience: IExperience, index: number) => {
+          Object.entries(experience).map(([exKey, exValue]: [any, any]) => {
             const exNewKey: any = `experiences[${index}].${exKey}`;
             setValue(exNewKey, exValue);
-          })
-        })
+          });
+        });
       }
-    })
-  }
+    });
+  };
 
   useEffect(() => {
     findOneStudent();
