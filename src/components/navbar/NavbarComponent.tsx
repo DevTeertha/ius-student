@@ -4,10 +4,14 @@ import { useContext } from 'react';
 import { clearStorage } from '../../shared/service/storageService';
 import { ToastContext } from '../../shared/components/toast/Toast';
 
+import { StateContext } from '../../App';
+
 function NavbarComponent() {
   const { successState, messageState } = useContext(ToastContext);
   const setIsSuccess = successState[1];
   const setMessage = messageState[1];
+  const { adminState } = useContext(StateContext);
+  const [isAdmin, setIsAdmin] = adminState;
 
   const navigate = useNavigate();
 
@@ -15,8 +19,10 @@ function NavbarComponent() {
     clearStorage();
     setIsSuccess(true);
     setMessage('Logout successfully');
-    navigate('/login');
+    setIsAdmin(() => false);
+    navigate('/');
   };
+
   return (
     <div className='bg-neutral'>
       <div className='container'>
@@ -29,14 +35,22 @@ function NavbarComponent() {
                 </svg>
               </label>
             </div>
-            <Link to={'/dashboard'} className='btn btn-ghost normal-case text-xl'>
+            <Link to={'/'} className='btn btn-ghost normal-case text-xl'>
               IUS Student
             </Link>
           </div>
           <div className='navbar-end'>
-            <a onClick={logout} className='btn'>
-              Sign Out
-            </a>
+            {isAdmin ? (
+              <a onClick={logout} className='btn'>
+                Sign Out
+              </a>
+            ) : (
+              <Link to={'/login'}>
+                <a type='button' className='btn'>
+                  Sign In
+                </a>
+              </Link>
+            )}
           </div>
         </div>
       </div>

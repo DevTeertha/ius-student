@@ -117,8 +117,8 @@ function StudentListComponent({
                         return handleShow(Number(student.studentId));
                       }}
                       type='button'
-                      className='btn btn-error'>
-                      {loading && <span className='loading loading-ring loading-lg'></span>} Delete
+                      className='btn bg-red-600 hover:bg-red-700 text-white'>
+                      Delete
                     </button>
                   </div>
                 )}
@@ -135,7 +135,7 @@ function StudentListComponent({
         <Modal.Actions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button disabled={loading} onClick={handleDeleteStudent} className='btn btn-error'>
-            Delete
+            {loading && <span className='loading loading-ring loading-lg'></span>} Delete
           </Button>
         </Modal.Actions>
       </Modal>

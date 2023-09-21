@@ -1,10 +1,14 @@
 import HomeComponent from '../components/home/HomeComponent';
+import NavbarComponent from '../components/navbar/NavbarComponent';
 
 function Home() {
   return (
-    <div className='container px-5 py-5'>
-      <HomeComponent />
-    </div>
+    <>
+      <NavbarComponent />
+      <div className='container px-5 py-5'>
+        <HomeComponent />
+      </div>
+    </>
   );
 }
 

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { memo, useContext, useEffect, useState } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -24,6 +24,7 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
     handleSubmit,
     control,
     setValue,
+    watch,
     formState: { errors },
   } = useForm<IStudent>();
 
@@ -64,7 +65,7 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
       }
       setLoading(false);
       setIsSuccess(true);
-      navigate('/dashboard');
+      navigate('/');
     } catch (error) {
       const errorResponse = getErrorResponse(error);
       setMessage(errorResponse.message);
@@ -95,6 +96,7 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
 
       if (key === 'experiences') {
         student?.experiences?.map((experience: IExperience, index: number) => {
+          console.log('experience: ', experience);
           Object.entries(experience).map(([exKey, exValue]: [any, any]) => {
             const exNewKey: any = `experiences[${index}].${exKey}`;
             setValue(exNewKey, exValue);
@@ -105,8 +107,10 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
   };
 
   useEffect(() => {
-    findOneStudent();
-  }, []);
+    if (studentId) {
+      findOneStudent();
+    }
+  }, [studentId]);
 
   return (
     <>
@@ -124,14 +128,16 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
               }}
             />
             <PersonalInformationFormComponent register={register} errors={errors} />
-            <EducationFormComponent register={register} errors={errors} />
+            <EducationFormComponent watch={watch} setValue={setValue} register={register} errors={errors} />
             <ExperienceFormComponent fields={experienceField} append={experienceAppend} remove={experienceRemove} register={register} errors={errors} />
             <div className='mt-3'>
-              <button type='button' className='btn mr-3'>
-                <Link to={'/dashboard'}>Back</Link>
-              </button>
+              <Link to={'/'}>
+                <button type='button' className='btn mr-3'>
+                  Back
+                </button>
+              </Link>
               <button disabled={loading} className='btn bg-gray-900 text-white hover:bg-gray-950 hover:text-white'>
-                {loading && <span className='loading loading-ring loading-md'></span>}Add
+                {loading && <span className='loading loading-ring loading-md'></span>} {studentId ? <span>Save</span> : <span>Add</span>}
               </button>
             </div>
           </form>
@@ -141,4 +147,4 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
   );
 }
 
-export default AddOrEditStudentComponent;
+export default memo(AddOrEditStudentComponent);

@@ -1,4 +1,5 @@
-import { FieldErrors, UseFormRegister } from 'react-hook-form';
+import { ChangeEvent } from 'react';
+import { FieldErrors, UseFormRegister, UseFormSetValue, UseFormWatch } from 'react-hook-form';
 
 import { EDegreeType } from '../enum/student.enum';
 
@@ -6,10 +7,12 @@ import { IStudent } from '../interface/student.interface';
 
 export interface IEducationUseFormProps {
   register: UseFormRegister<IStudent>;
+  setValue: UseFormSetValue<IStudent>;
   errors: FieldErrors<IStudent>;
+  watch: UseFormWatch<IStudent>;
 }
 
-const EducationFormComponent = ({ register, errors }: IEducationUseFormProps) => {
+const EducationFormComponent = ({ register, errors, watch, setValue }: IEducationUseFormProps) => {
   return (
     <div className='mt-6'>
       <div className='flex justify-between items-center py-3'>
@@ -41,10 +44,12 @@ const EducationFormComponent = ({ register, errors }: IEducationUseFormProps) =>
             <span className='text-base label-text'>Degree Type</span>
           </label>
           <select
+            value={watch(`education.degreeType`)}
             defaultValue={EDegreeType.BSC}
             {...register(`education.degreeType`, { required: true })}
             className={`w-full input input-bordered input-light border-gray-500`}
             name='degreeType'
+            onChange={(e: ChangeEvent<HTMLSelectElement>) => setValue(`education.degreeType`, e.target.value)}
             id='degreeType'>
             <option value={EDegreeType.BBA}>BBA</option>
             <option value={EDegreeType.BSC}>BSC</option>

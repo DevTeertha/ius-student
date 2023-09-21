@@ -17,7 +17,7 @@ function StudentProfileComponent() {
         <div>
           <div>
             <div className='w-[100px] h-[100px] mx-auto rounded-full overflow-hidden p-2 bg-gray-100'>
-              <img className='w-full rounded-full' src={student?.imgUrl ?? '/default_avatar.webp'} />
+              <img className='w-full h-full rounded-full' src={student?.imgUrl ?? '/default_avatar.webp'} />
             </div>
             <div className='text-dark-600 md:text-white mt-5'>
               <h4 className='text-2xl text-center font-semibold mb-5'>{student?.firstName + ' ' + student?.lastName}</h4>
@@ -156,37 +156,41 @@ function StudentProfileComponent() {
               </table>
             </div>
           </div>
-          <div>
-            <h2 className='font-bold text-2xl'>Experiences</h2>
-            <hr />
-            <div className='overflow-x-auto my-4'>
-              <table className='table'>
-                <thead>
-                  <th className='text-bold text-gray-900'>Company Name</th>
-                  <th className='text-bold text-gray-900'>Type</th>
-                  <th className='text-bold text-gray-900'>Designation</th>
-                  <th className='text-bold text-gray-900'>Address</th>
-                  <th className='text-bold text-gray-900'>Start From</th>
-                  <th className='text-bold text-gray-900'>End Date</th>
-                </thead>
-                <tbody>
-                  {student?.experiences?.map((experience: IExperience, key: number) => {
-                    return (
-                      <tr key={'experience_' + student.studentId + '_' + key}>
-                        <td>{experience?.companyName ?? 'N/A'}</td>
-                        <td>{experience?.jobType ?? 'N/A'}</td>
-                        <td>{experience?.designation ?? 'N/A'}</td>
-                        <td>{experience?.address ?? 'N/A'}</td>
-                        <td>{experience?.startFrom ?? 'N/A'}</td>
-                        <td>{experience?.endFrom ?? 'N/A'}</td>
-                      </tr>
-                    );
-                  })}
-                  <tr></tr>
-                </tbody>
-              </table>
+          {student?.experiences?.length ? (
+            <div>
+              <h2 className='font-bold text-2xl'>Experiences</h2>
+              <hr />
+              <div className='overflow-x-auto my-4'>
+                <table className='table'>
+                  <thead>
+                    <th className='text-bold text-gray-900'>Company Name</th>
+                    <th className='text-bold text-gray-900'>Type</th>
+                    <th className='text-bold text-gray-900'>Designation</th>
+                    <th className='text-bold text-gray-900'>Address</th>
+                    <th className='text-bold text-gray-900'>Start From</th>
+                    <th className='text-bold text-gray-900'>End Date</th>
+                  </thead>
+                  <tbody>
+                    {student?.experiences?.map((experience: IExperience, key: number) => {
+                      return (
+                        <tr key={'experience_' + student.studentId + '_' + key}>
+                          <td>{experience?.companyName ?? 'N/A'}</td>
+                          <td>{experience?.jobType ?? 'N/A'}</td>
+                          <td>{experience?.designation ?? 'N/A'}</td>
+                          <td>{experience?.address ?? 'N/A'}</td>
+                          <td>{experience?.startFrom ?? 'N/A'}</td>
+                          <td>{experience?.endFrom ?? 'N/A'}</td>
+                        </tr>
+                      );
+                    })}
+                    <tr></tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
