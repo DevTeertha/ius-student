@@ -1,11 +1,12 @@
-import { memo, useContext, useEffect, useState } from 'react';
+import { memo, useContext, useEffect, useState, useRef } from 'react';
 import { useFieldArray, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import dayjs from 'dayjs';
 
-import Toast, { ToastContext } from '../../shared/components/toast/Toast';
+import { ToastContext } from '../../shared/components/toast/Toast';
 
 import { IExperience, IStudent } from './interface/student.interface';
-import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
+import { IToastContext } from '../../shared/interface/toast.interface';
 
 import NavbarComponent from '../navbar/NavbarComponent';
 import UploadPhotoComponent from './UploadPhotoComponent';
@@ -15,6 +16,7 @@ import PersonalInformationFormComponent from './forms/PersonalInformationFormCom
 
 import { createStudent, getOneStudent, updateStudent, uploadImage } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
+import { EJobType } from './enum/student.enum';
 
 function AddOrEditStudentComponent({ studentId = null }: { studentId: string | null }) {
   const [file, setFile] = useState<string | null>(null);
@@ -39,9 +41,9 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
 
   const { errorState, successState, messageState } = useContext<IToastContext>(ToastContext);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isError, setIsError] = errorState;
-  const [isSuccess, setIsSuccess] = successState;
-  const [message, setMessage] = messageState;
+  const setIsError = errorState[1];
+  const setIsSuccess = successState[1];
+  const setMessage = messageState[1];
   const navigate = useNavigate();
 
   const addOrEdit = async (data: IStudent) => {
@@ -96,7 +98,7 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
 
       if (key === 'experiences') {
         student?.experiences?.map((experience: IExperience, index: number) => {
-          console.log('experience: ', experience);
+          experienceAppend({ companyName: '', jobType: EJobType.FULL_TIME, address: '', country: '', designation: '', startFrom: dayjs().format('YYYY-MM-DD'), endFrom: '', isCurrentEmployee: true });
           Object.entries(experience).map(([exKey, exValue]: [any, any]) => {
             const exNewKey: any = `experiences[${index}].${exKey}`;
             setValue(exNewKey, exValue);
@@ -106,16 +108,18 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
     });
   };
 
+  const shouldLog = useRef(true);
   useEffect(() => {
-    if (studentId) {
-      findOneStudent();
+    if (shouldLog.current) {
+      shouldLog.current = false;
+      if (studentId) {
+        findOneStudent();
+      }
     }
   }, [studentId]);
 
   return (
     <>
-      {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
-      {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
       <NavbarComponent />
       <div className='p-4 mt-5'>
         <div>
