@@ -6,10 +6,10 @@ import { useQueryClient } from 'react-query';
 import { PAGE_SIZE } from '../home/HomeComponent';
 
 import Pagination from '../../shared/components/toast/Pagination';
-import Toast, { ToastContext } from '../../shared/components/toast/Toast';
+import { ToastContext } from '../../shared/components/toast/Toast';
 
 import { IStudent } from './interface/student.interface';
-import { EToastStatusType, IToastContext } from '../../shared/interface/toast.interface';
+import { IToastContext } from '../../shared/interface/toast.interface';
 
 import { deleteStudent } from './studentService';
 import { getErrorResponse } from '../../shared/service/utilService';
@@ -29,9 +29,9 @@ function StudentListComponent({
   const queryClient = useQueryClient();
   const [deletableId, setDeletableId] = useState<number | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [isError, setIsError] = errorState;
-  const [isSuccess, setIsSuccess] = successState;
-  const [message, setMessage] = messageState;
+  const setIsError = errorState[1];
+  const setIsSuccess = successState[1];
+  const setMessage = messageState[1];
 
   const ref = useRef<HTMLDialogElement>(null);
 
@@ -69,8 +69,6 @@ function StudentListComponent({
 
   return (
     <>
-      {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
-      {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
       <div className='grid grid-flow-row xl:grid-cols-5 lg:grid-cols-4 gap-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1'>
         {students.length ? (
           students?.map((student: IStudent, key: number) => (

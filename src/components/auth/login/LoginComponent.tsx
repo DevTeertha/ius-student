@@ -3,13 +3,12 @@ import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { ILoginPayload } from './login.interface';
-import { EToastStatusType } from '../../../shared/interface/toast.interface';
 
 import { postLogin } from './loginService';
 import { setToken } from '../../../shared/service/storageService';
 import { getErrorResponse } from '../../../shared/service/utilService';
 
-import Toast, { ToastContext } from '../../../shared/components/toast/Toast';
+import { ToastContext } from '../../../shared/components/toast/Toast';
 import { StateContext } from '../../../App';
 
 function LoginComponent() {
@@ -20,9 +19,9 @@ function LoginComponent() {
   } = useForm<ILoginPayload>();
   const [loading, setLoading] = useState<boolean>(false);
   const { errorState, successState, messageState } = useContext(ToastContext);
-  const [isError, setIsError] = errorState;
-  const [isSuccess, setIsSuccess] = successState;
-  const [message, setMessage] = messageState;
+  const setIsError = errorState[1];
+  const setIsSuccess = successState[1];
+  const setMessage = messageState[1];
   const navigate = useNavigate();
 
   const { adminState } = useContext(StateContext);
@@ -49,8 +48,6 @@ function LoginComponent() {
 
   return (
     <>
-      {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
-      {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
       <div className='login-container'>
         <div className='login-card md:w-[500px] w-full bg-white drop-shadow-lg p-4 w-50 rounded-lg'>
           <h1 className='text-3xl font-semibold text-center text-gray-800'>Login</h1>
