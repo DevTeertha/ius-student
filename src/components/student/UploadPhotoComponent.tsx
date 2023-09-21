@@ -41,7 +41,7 @@ const UploadPhotoComponent = ({ context }: { context: IUploadPhotoProps }) => {
             <label className='flex flex-col w-full border-4 border-dashed hover:bg-gray-100 hover:border-gray-300'>
               <div className='flex flex-col items-center justify-center pt-7'>
                 {imageURL ? (
-                  <img className='w-full' src={imageURL} alt={imageURL} />
+                  <img className='w-[300px]' src={imageURL} alt={imageURL} />
                 ) : (
                   <>
                     <svg xmlns='http://www.w3.org/2000/svg' className='w-12 h-12 text-gray-400 group-hover:text-gray-600' viewBox='0 0 20 20'>

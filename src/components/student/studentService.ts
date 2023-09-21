@@ -48,7 +48,7 @@ export const getStudents = async (key: QueryFunctionContext): Promise<IHttpRespo
   }
 };
 
-export const getOneStudent = async (studentId?: string): Promise<IHttpResponse<IStudent>> => {
+export const getOneStudent = async (studentId?: string | null): Promise<IHttpResponse<IStudent>> => {
   try {
     const studentResponse: AxiosResponse<IHttpResponse<IStudent>> = await axiosInstance.get(`${BASE_URL}/students/${studentId}`);
     return studentResponse.data;

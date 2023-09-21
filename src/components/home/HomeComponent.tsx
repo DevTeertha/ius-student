@@ -1,17 +1,23 @@
-import { memo, useState } from 'react';
+import { memo, useContext, useState } from 'react';
 import { useQuery, useQueryClient } from 'react-query';
+import { Link } from 'react-router-dom';
 
 import StudentListComponent from '../student/StudentListComponent';
 import TransparentSpinner from '../../shared/components/spinner/TransparentSpinner';
 
 import { getStudents } from '../student/studentService';
 
+import { StateContext } from '../../App';
+
 export const PAGE_SIZE = 8;
 
-function HomeComponent({ children, showAdminActionButton = false }: any) {
+function HomeComponent() {
   const [currentPage, setCurrentPage] = useState(1);
   const [searchText, setSearchText] = useState('');
   const queryClient = useQueryClient();
+  const { adminState } = useContext(StateContext);
+  const [isAdmin] = adminState;
+
   const { data, isLoading } = useQuery(['getStudents', { limit: PAGE_SIZE, offset: (currentPage - 1) * PAGE_SIZE, searchText }], getStudents);
 
   const handleSearch = () => {
@@ -28,7 +34,7 @@ function HomeComponent({ children, showAdminActionButton = false }: any) {
     <>
       {isLoading && <TransparentSpinner />}
       <div className='grid grid-flow-row-dense grid-cols-5 my-5'>
-        <div className={showAdminActionButton ? 'col-span-4' : 'col-span-5'}>
+        <div className={isAdmin ? 'col-span-4' : 'col-span-5'}>
           <div className='text-center'>
             <div className='flex justify-center items-center'>
               <input
@@ -45,9 +51,15 @@ function HomeComponent({ children, showAdminActionButton = false }: any) {
             </div>
           </div>
         </div>
-        {children}
+        {isAdmin && (
+          <div className='text-end'>
+            <Link to={'/students/add'}>
+              <button className='btn btn-dark bg-gray-800 text-white hover:bg-gray-900 hover:text-white w-4/5'>Add Student</button>
+            </Link>
+          </div>
+        )}
       </div>
-      <StudentListComponent showAdminActionButton={showAdminActionButton} handlePageClick={handlePageClick} count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
+      <StudentListComponent showAdminActionButton={isAdmin} handlePageClick={handlePageClick} count={data?.data?.count ?? 0} students={data?.data?.students ?? []} />
     </>
   );
 }

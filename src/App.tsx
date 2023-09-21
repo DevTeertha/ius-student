@@ -1,12 +1,11 @@
 import './App.css';
 
-import { useState } from 'react';
+import { Dispatch, SetStateAction, createContext, useState } from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import Home from './pages/Home';
 import Login from './pages/Login';
-import Dashboard from './pages/dashboard/Dashboard';
 import AddStudent from './pages/dashboard/AddStudent';
 
 import { authGuard, notAuthGuard } from './shared/guard/auth/authGuard';
@@ -15,6 +14,7 @@ import Toast, { ToastContext } from './shared/components/toast/Toast';
 
 import { EToastStatusType } from './shared/interface/toast.interface';
 import StudentProfileComponent from './components/student/StudentProfileComponent';
+import { getToken } from './shared/service/storageService';
 
 const router = createBrowserRouter([
   {
@@ -24,11 +24,6 @@ const router = createBrowserRouter([
   {
     path: '/students/:studentId',
     element: <StudentProfileComponent />,
-  },
-  {
-    path: '/dashboard',
-    element: <Dashboard />,
-    loader: authGuard,
   },
   {
     path: '/students/add',
@@ -47,25 +42,36 @@ const router = createBrowserRouter([
   },
 ]);
 
+interface IStateContext {
+  adminState: [boolean, Dispatch<SetStateAction<boolean>>];
+}
+
 const client = new QueryClient();
+export const StateContext = createContext<IStateContext | any>(null);
 
 function App() {
   const [isError, setIsError] = useState<boolean>(false);
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [message, setMessage] = useState<string>('');
+  const [isAdmin, setIsAdmin] = useState(getToken() ? true : false);
 
   return (
     <QueryClientProvider client={client}>
-      <ToastContext.Provider
+      <StateContext.Provider
         value={{
-          errorState: [isError, setIsError],
-          successState: [isSuccess, setIsSuccess],
-          messageState: [message, setMessage],
+          adminState: [isAdmin, setIsAdmin],
         }}>
-        {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
-        {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
-        <RouterProvider router={router} />
-      </ToastContext.Provider>
+        <ToastContext.Provider
+          value={{
+            errorState: [isError, setIsError],
+            successState: [isSuccess, setIsSuccess],
+            messageState: [message, setMessage],
+          }}>
+          {isSuccess && <Toast status={EToastStatusType.SUCCESS} state={[isSuccess, setIsSuccess]} message={message} />}
+          {isError && <Toast status={EToastStatusType.ERROR} state={[isError, setIsError]} message={message} />}
+          <RouterProvider router={router} />
+        </ToastContext.Provider>
+      </StateContext.Provider>
     </QueryClientProvider>
   );
 }
