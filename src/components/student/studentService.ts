@@ -6,8 +6,8 @@ import { axiosInstance } from '../../shared/interceptor';
 import { IHttpResponse } from '../../shared/interface/httpResponse.interface';
 import { IFileUploadResponse, IStudent, IStudentPaginationResponse } from './interface/student.interface';
 
-// const BASE_URL = 'https://ius-student-backend.vercel.app/api';
-const BASE_URL = 'http://localhost:8081/api';
+const BASE_URL = 'https://ius-student-backend.vercel.app/api';
+// const BASE_URL = 'http://localhost:8081/api';
 
 export const createStudent = async (payload: IStudent): Promise<IHttpResponse<IStudent>> => {
   try {
