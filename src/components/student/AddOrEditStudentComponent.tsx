@@ -121,8 +121,8 @@ function AddOrEditStudentComponent({ studentId = null }: { studentId: string | n
   return (
     <>
       <NavbarComponent />
-      <div className='p-4 mt-5'>
-        <div>
+      <div className='container'>
+        <div className='px-5 mt-5'>
           <h1 className='text-2xl font-bold'>Add / Edit Student</h1>
           <form onSubmit={handleSubmit(onSubmit)}>
             <UploadPhotoComponent
